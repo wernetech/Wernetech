@@ -1,0 +1,26 @@
+{
+  "name": "empresa-wernetech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:back\" \"npm run dev:front\"",
+    "dev:back": "cd backend && npm run dev",
+    "dev:front": "cd frontend && npm run dev"
+  },
+  "prisma": {
+    "schema": "backend/prisma/schema.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prisma": "^6.8.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "pg": "^8.16.0",
+    "postgres": "^3.4.7"
+  }
+}

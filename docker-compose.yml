@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: wernetech_admin
+      POSTGRES_PASSWORD: admin_9876
+      POSTGRES_DB: empresa
+    volumes:
+      - pgdata:/bitnami/postgresql
+
+  app:
+    build: .
+    container_name: wernetech_app
+    restart: always
+    ports:
+      - "3000:3000" # Next.js
+      - "3333:3333" # NestJS
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgresql://wernetech_admin:admin_9876@host.docker.internal:5432/empresa"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  pgdata:
