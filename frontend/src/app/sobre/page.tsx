@@ -48,10 +48,10 @@ export default function SobrePage() {
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 items-center justify-center">
             {[
-              { src: "/logos/microsoft.png", alt: "Microsoft Partner" },
-              { src: "/logos/adobe.png", alt: "Adobe Partner" },
-              { src: "/logos/autodesk.png", alt: "Autodesk Partner" },
-              { src: "/logos/anydesk-logo.png", alt: "AnyDesk" },
+              { src: "/commerce/office.webp", alt: "Microsoft Partner" },
+              { src: "/commerce/creative.png", alt: "Adobe Partner" },
+              { src: "/commerce/autodesk.png", alt: "Autodesk Partner" },
+              { src: "/anydesk-logo.png", alt: "AnyDesk" },
             ].map((logo, i) => (
               <img
                 key={i}
