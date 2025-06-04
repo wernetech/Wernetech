@@ -1,10 +1,69 @@
-export const metadata = {
-  title: "Consultoria em Tecnologia | WerneTech",
-  description:
-    "Transforme sua empresa com a consultoria especializada da WerneTech. Diagnóstico, planejamento e implementação com foco em resultados.",
-};
+"use client";
+import { useState } from "react";
 
 export default function ConsultoriaPage() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    position: "",
+    segment: "",
+    message: "",
+    accepted: false,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleChange = (e: any) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+
+    if (!form.accepted) {
+      alert("Você precisa aceitar a política de privacidade.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/leads`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setSuccess(true);
+        setForm({
+          name: "",
+          email: "",
+          phone: "",
+          company: "",
+          position: "",
+          segment: "",
+          message: "",
+          accepted: false,
+        });
+      } else {
+        alert("Erro ao enviar formulário");
+      }
+    } catch (err) {
+      console.error("Erro no envio:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white text-gray-800">
       {/* Hero Section */}
@@ -20,57 +79,144 @@ export default function ConsultoriaPage() {
         </div>
       </section>
 
-      {/* Benefícios */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-blue-800 text-center mb-12">
-            Como podemos transformar seu negócio
+      {/* Formulário LGPD */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-blue-800 text-center mb-8">
+            Solicite uma Consultoria com Especialista
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Diagnóstico Completo",
-                desc: "Analisamos sua infraestrutura, software e processos para identificar oportunidades reais de melhoria.",
-              },
-              {
-                title: "Plano Estratégico",
-                desc: "Desenvolvemos um plano de ação personalizado com foco em produtividade, automação e segurança.",
-              },
-              {
-                title: "Execução Guiada",
-                desc: "Nossa equipe acompanha a implantação de soluções e oferece suporte técnico contínuo.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-lg shadow-md hover:shadow-xl p-6 transition"
-              >
-                <h3 className="text-blue-700 font-semibold text-lg mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* CTA Final */}
-      <section className="bg-blue-50 py-16 border-t border-blue-100">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-blue-800 mb-4">
-            Pronto para dar o próximo passo?
-          </h2>
-          <p className="text-gray-700 max-w-xl mx-auto mb-8">
-            Entre em contato com nossos especialistas e descubra como a
-            consultoria da WerneTech pode levar sua empresa a um novo patamar.
-          </p>
-          <a
-            href="/contato"
-            className="inline-block bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-md font-medium transition"
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white rounded-xl shadow-lg p-8 space-y-6"
           >
-            Fale com um Consultor
-          </a>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  Nome *
+                </label>
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Seu nome completo"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  E-mail *
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="voce@empresa.com"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  Telefone/Whatsapp *
+                </label>
+                <input
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="(99) 99999-9999"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  Cargo
+                </label>
+                <input
+                  name="position"
+                  value={form.position}
+                  onChange={handleChange}
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Ex: Diretor de TI"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  Empresa
+                </label>
+                <input
+                  name="company"
+                  value={form.company}
+                  onChange={handleChange}
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Nome da empresa"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  Segmento
+                </label>
+                <input
+                  name="segment"
+                  value={form.segment}
+                  onChange={handleChange}
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="Ex: Construção civil"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm text-gray-700 font-medium">
+                Conte-nos mais sobre sua necessidade *
+              </label>
+              <textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                required
+                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 min-h-[120px] shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Descreva brevemente seu desafio ou necessidade técnica."
+              />
+            </div>
+
+            <label className="flex items-start sm:items-center text-sm text-gray-700 gap-2">
+              <input
+                type="checkbox"
+                name="accepted"
+                checked={form.accepted}
+                onChange={handleChange}
+                className="mt-1 sm:mt-0"
+              />
+              <span>
+                Li e aceito a{" "}
+                <a
+                  href="/politica"
+                  target="_blank"
+                  className="text-blue-600 underline"
+                >
+                  Política de Privacidade
+                </a>
+              </span>
+            </label>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-md font-semibold transition"
+            >
+              {loading ? "Enviando..." : "Receber Cotação"}
+            </button>
+
+            {success && (
+              <p className="text-green-600 text-sm text-center mt-4">
+                Lead enviado com sucesso! Entraremos em contato em breve.
+              </p>
+            )}
+          </form>
         </div>
       </section>
     </main>
