@@ -16,7 +16,7 @@ const navLinks = [
     ],
   },
   { href: "/consultoria", label: "Consultoria" },
-  // { href: "/blog", label: "Blog" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export default function Header() {
