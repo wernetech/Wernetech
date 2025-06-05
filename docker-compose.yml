@@ -19,10 +19,11 @@ services:
     ports:
       - "3000:3000" # Next.js
       - "3333:3333" # NestJS
+      - "4000:4000" # Seu backend Express
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: "postgresql://wernetech_admin:admin_9876@host.docker.internal:5432/empresa"
+      DATABASE_URL: "postgresql://wernetech_admin:admin_9876@postgres:5432/empresa"
     volumes:
       - .:/app
       - /app/node_modules
