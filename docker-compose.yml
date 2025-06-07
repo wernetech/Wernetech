@@ -24,6 +24,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: "postgresql://wernetech_admin:admin_9876@postgres:5432/empresa"
+      JWT_SECRET: "2fb7b9dc6cf44c0a928b0e9f41f3c9286bb35fef7d1a411c6c88b85b6e007c78"
     volumes:
       - .:/app
       - /app/node_modules

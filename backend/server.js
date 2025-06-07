@@ -7,6 +7,7 @@ import postRoutes from './routes/posts.js';
 import { createLeadsTable } from './database/createLeadsTable.js';
 import { createUsersTable } from './database/createUsersTable.js';
 import { createPostsTable } from './database/createPostsTable.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -16,8 +17,13 @@ createLeadsTable();
 createUsersTable();
 createPostsTable();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3001', // substitua por "*" se quiser, MAS sem credentials
+  credentials: true, // permite cookies e headers de autenticação
+}));
+
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/leads', leadsRoutes);
 app.use('/api/auth', authRoutes);

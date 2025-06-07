@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AdminPostForm() {
+  const router = useRouter();
+
   const [form, setForm] = useState({
     title: "",
     slug: "",
@@ -16,6 +19,26 @@ export default function AdminPostForm() {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // Verifica autenticação no carregamento
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/me`, {
+          credentials: "include",
+        });
+        if (!res.ok) {
+          router.push("/login");
+        } else {
+          setAuthChecked(true);
+        }
+      } catch (err) {
+        router.push("/login");
+      }
+    }
+    checkAuth();
+  }, [router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -32,6 +55,7 @@ export default function AdminPostForm() {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/post`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           ...form,
           reading_time: Number(form.reading_time),
@@ -59,6 +83,8 @@ export default function AdminPostForm() {
       setLoading(false);
     }
   };
+
+  if (!authChecked) return null;
 
   return (
     <main className="min-h-screen bg-gray-100 px-4 py-12 text-black">

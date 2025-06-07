@@ -1,26 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { checkAuth } = useAuth();
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(form),
+      });
 
       const data = await res.json();
 
@@ -29,12 +32,12 @@ export default function LoginForm() {
         return;
       }
 
-      // ✅ Sucesso → redireciona para subdomínio
-      // window.open("https://admin.empresa.com.br", "_blank");
-      window.open("https://www.google.com/");
+      // Revalida estado após login
+      await checkAuth();
+      router.push("/");
     } catch (err) {
       console.error(err);
-      // setError("Erro na conexão com o servidor");
+      setError("Erro ao conectar com o servidor");
     } finally {
       setLoading(false);
     }
@@ -72,7 +75,7 @@ export default function LoginForm() {
               Senha
             </label>
             <input
-              type="text"
+              type="password"
               required
               className="mt-1 w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
               placeholder="********"

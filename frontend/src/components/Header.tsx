@@ -1,7 +1,10 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, LogIn, ChevronDown } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { Menu, X, LogIn, LogOut, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -20,13 +23,62 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { isAuthenticated, checkAuth, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    await checkAuth();
+    router.push("/");
+  };
+
+const pathname = usePathname(); // 👈 obter rota atual
+
+const renderAuthButtons = () => {
+  if (isAuthenticated === null) return null;
+
+  return isAuthenticated ? (
+    <>
+      {pathname === "/blog/admin" ? (
+        <Link
+          href="/"
+          className="ml-2 inline-flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md shadow hover:bg-gray-600 transition"
+        >
+          Voltar
+        </Link>
+      ) : (
+        <Link
+          href="/blog/admin"
+          className="ml-2 inline-flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-md shadow hover:bg-gray-800 transition"
+        >
+          Admin
+        </Link>
+      )}
+
+      <button
+        onClick={handleLogout}
+        className="ml-2 inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition"
+      >
+        <LogOut size={16} />
+        Sair
+      </button>
+    </>
+  ) : (
+    <Link
+      href="/login"
+      className="ml-4 inline-flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded-md shadow hover:bg-blue-950 transition"
+    >
+      <LogIn size={16} />
+      Entrar
+    </Link>
+  );
+};
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-200 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-4">
-        {/* Logo */}
         <Link
           href="/"
           className="text-2xl font-extrabold tracking-tight text-blue-800 hover:opacity-90 transition"
@@ -34,7 +86,7 @@ export default function Header() {
           Werne<span className="text-neutral-900">Tech</span>
         </Link>
 
-        {/* Menu Desktop */}
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700 relative">
           {navLinks.map((link) =>
             link.dropdown ? (
@@ -51,7 +103,6 @@ export default function Header() {
                     className="group-hover:text-blue-800 transition"
                   />
                 </button>
-
                 <AnimatePresence>
                   {dropdownOpen && (
                     <motion.div
@@ -85,17 +136,10 @@ export default function Header() {
             )
           )}
 
-          {/* Botão Login */}
-          <Link
-            href="/login"
-            className="ml-4 inline-flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded-md shadow hover:bg-blue-950 transition"
-          >
-            <LogIn size={16} />
-            Entrar
-          </Link>
+          {renderAuthButtons()}
         </nav>
 
-        {/* Botão Mobile */}
+        {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-gray-700"
@@ -105,7 +149,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Menu Mobile */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -143,14 +187,36 @@ export default function Header() {
               )
             )}
 
-            <Link
-              href="/login"
-              onClick={() => setMobileOpen(false)}
-              className="mt-2 flex items-center justify-center gap-2 bg-blue-800 text-white py-2 rounded-md hover:bg-red-700 transition"
-            >
-              <LogIn size={16} />
-              Entrar
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/blog/admin"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-2 flex items-center justify-center gap-2 bg-gray-700 text-white py-2 rounded-md hover:bg-gray-800 transition"
+                >
+                  Admin
+                </Link>
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    handleLogout();
+                  }}
+                  className="mt-2 flex items-center justify-center gap-2 bg-red-600 text-white py-2 rounded-md hover:bg-red-700 transition"
+                >
+                  <LogOut size={16} />
+                  Sair
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 flex items-center justify-center gap-2 bg-blue-800 text-white py-2 rounded-md hover:bg-blue-950 transition"
+              >
+                <LogIn size={16} />
+                Entrar
+              </Link>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,6 +1,7 @@
 import express from 'express';
 import { db } from '../database/db.js';
 import { z } from 'zod';
+import verifyAuth from '../middleware/verifyAuth.js'
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ const postSchema = z.object({
 
 
 // Rota para criação de lead
-router.post('/', async (req, res) => {
+router.post('/', verifyAuth, async (req, res) => {
     const result = postSchema.safeParse(req.body);
 
     if (!result.success) {
