@@ -10,12 +10,15 @@ export default function SobrePage() {
       <section className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold">
-            Sobre a WerneTech
+            Nosso DNA é a Inovação
           </h1>
           <p className="mt-4 text-lg max-w-3xl mx-auto">
-            Há mais de uma década atuando com excelência, impulsionamos a
-            transformação digital de empresas com tecnologia, capacitação e
-            compromisso.
+            Fundada há 6 anos, a Wernetech nasceu da visão de que a tecnologia,
+            quando aplicada de forma estratégica, é a principal força para
+            impulsionar organizações. Não somos apenas fornecedores; somos
+            arquitetos de soluções, atuando como um parceiro consultivo que
+            mergulha na realidade de cada cliente para entender seus desafios e
+            entregar resultados que verdadeiramente importam.
           </p>
         </div>
       </section>
@@ -27,10 +30,33 @@ export default function SobrePage() {
               Nossa Missão
             </h2>
             <p className="text-gray-700 leading-relaxed">
-              Capacitar e digitalizar empresas com soluções inovadoras,
-              acessíveis e confiáveis nas áreas de software, consultoria,
-              treinamentos EAD e infraestrutura. Buscamos sempre a excelência
-              técnica com foco em atendimento humanizado.
+              Resolver desafios complexos através de soluções tecnológicas
+              personalizadas, garantindo que nossos clientes, do setor público
+              ao privado, operem com máxima segurança e eficiência.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-blue-800 mb-4">
+              Nossa Visão
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Ser a empresa de tecnologia mais confiável do Brasil para projetos
+              de missão crítica, liderando a transformação digital com
+              expertise, inovação e compromisso com o sucesso do cliente.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-blue-800 mb-4">
+              Nossos Valores
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              Nossos pilares são o compromisso com o cliente, vendo seu sucesso
+              como nossa métrica final, e a excelência técnica, buscando a
+              maestria em cada projeto. Agimos com integridade inabalável,
+              conduzindo nossos negócios com transparência, e promovemos a
+              inovação com propósito, focada em gerar impacto real. Acima de
+              tudo, acreditamos na força da parceria, construindo relações de
+              longo prazo baseadas na confiança e colaboração.
             </p>
           </div>
           <img

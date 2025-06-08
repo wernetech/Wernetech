@@ -18,7 +18,7 @@ createUsersTable();
 createPostsTable();
 
 app.use(cors({
-  origin: 'http://localhost:3001', // substitua por "*" se quiser, MAS sem credentials
+  origin: 'http://localhost:3000', // substitua por "*" se quiser, MAS sem credentials
   credentials: true, // permite cookies e headers de autenticação
 }));
 

@@ -79,6 +79,56 @@ export default function ConsultoriaPage() {
         </div>
       </section>
 
+      {/* Seção de Capacitação e Treinamento */}
+      <section className="py-20 bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-6 text-gray-800">
+          <h2 className="text-3xl font-bold text-blue-800 mb-4">
+            Capacitação e Treinamento Contínuo
+          </h2>
+          <p className="text-lg text-gray-600 mb-6">
+            Domine as Ferramentas que Impulsionam seu Negócio
+          </p>
+          <p className="mb-4">
+            Acreditamos que a verdadeira transformação digital acontece quando
+            as equipes dominam as ferramentas que têm em mãos. Por isso, criamos
+            uma plataforma de treinamento exclusiva, projetada para capacitar
+            seus colaboradores e garantir o máximo retorno sobre seu
+            investimento em tecnologia.
+          </p>
+          <p className="mb-4">
+            Através de um modelo de <strong>assinatura flexível</strong>, sua
+            empresa ganha acesso a um portal de EAD com cursos, workshops e
+            tutoriais sobre as principais plataformas do mercado — com foco
+            especial em <strong>Google Workspace</strong> e{" "}
+            <strong>Zoom</strong>.
+          </p>
+          <p className="mb-6">
+            Ensinamos desde funcionalidades básicas até estratégias avançadas de
+            colaboração, gestão e segurança, para que sua equipe utilize 100% do
+            potencial das ferramentas.
+          </p>
+
+          <ul className="list-disc pl-6 space-y-2 text-sm">
+            <li>
+              <strong>Produtividade Acelerada:</strong> Equipes treinadas
+              trabalham mais rápido e de forma mais inteligente.
+            </li>
+            <li>
+              <strong>Maior Retorno sobre o Investimento (ROI):</strong>{" "}
+              Transforme seu investimento em resultados reais.
+            </li>
+            <li>
+              <strong>Aprendizagem Contínua:</strong> Mantenha sua equipe
+              atualizada com as últimas funcionalidades.
+            </li>
+            <li>
+              <strong>Redução de Custos com Suporte:</strong> Usuários
+              capacitados resolvem mais problemas de forma autônoma.
+            </li>
+          </ul>
+        </div>
+      </section>
+
       {/* Formulário LGPD */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-3xl mx-auto px-6">

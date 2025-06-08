@@ -10,16 +10,18 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { href: "/", label: "Início" },
   { href: "/sobre", label: "Sobre" },
-  {
-    label: "Soluções",
-    dropdown: [
-      { href: "/solucoes/software", label: "Softwares" },
-      { href: "/solucoes/licenciamento", label: "Licenciamento" },
-      { href: "/solucoes/suporte", label: "Suporte" },
-    ],
-  },
+  // {
+  //   label: "Soluções",
+  //   dropdown: [
+  //     { href: "/solucoes/software", label: "Softwares" },
+  //     { href: "/solucoes/licenciamento", label: "Licenciamento" },
+  //     { href: "/solucoes/suporte", label: "Suporte" },
+  //   ],
+  // },
+  { href: "/solucoes", label: "Soluções" },
   { href: "/consultoria", label: "Consultoria" },
   { href: "/blog", label: "Blog" },
+  { href: "/clientes", label: "Nossos Clientes" },
 ];
 
 export default function Header() {

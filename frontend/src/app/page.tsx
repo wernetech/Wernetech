@@ -34,11 +34,14 @@ export default function HomePage() {
       {/* HERO */}
       <div className="text-center py-16 px-4">
         <h1 className="text-3xl md:text-4xl font-bold text-blue-800">
-          Revolucione o seu negócio com a transformação digital
+          Impulsionando o Futuro com Soluções de TI Inteligentes
         </h1>
         <p className="mt-4 text-gray-300">
-          Há três décadas atendendo com seriedade e competência, junte-se a nós
-          na construção do futuro.
+          Desenvolvemos soluções tecnológicas robustas que capacitam o setor
+          público e empresas privadas a alcançar novos patamares de eficiência,
+          segurança e inovação. Com parceiros líderes mundiais como Google e
+          Zoom, e a confiança de mais de 800 clientes, transformamos desafios
+          complexos em resultados concretos.
         </p>
       </div>
 

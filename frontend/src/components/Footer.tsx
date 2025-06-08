@@ -100,8 +100,15 @@ export default function Footer() {
       </div>
 
       <div className="bg-gray-50 py-4 border-t border-gray-200 text-center text-xs text-gray-500">
-        &copy; {new Date().getFullYear()} WerneTech. Todos os direitos
-        reservados.
+        &copy; {new Date().getFullYear()} WerneTech.{" "}
+        <a
+          href="https://drive.google.com/file/d/1QzMIppZCWm2efHcHuTHUgTeZy78HIzpd/view"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-blue-600 transition"
+        >
+          Todos os direitos reservados
+        </a>
       </div>
     </footer>
   );
