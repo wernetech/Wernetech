@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image"; // adicione no topo se ainda não tiver
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -10,14 +11,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { href: "/", label: "Início" },
   { href: "/sobre", label: "Sobre" },
-  // {
-  //   label: "Soluções",
-  //   dropdown: [
-  //     { href: "/solucoes/software", label: "Softwares" },
-  //     { href: "/solucoes/licenciamento", label: "Licenciamento" },
-  //     { href: "/solucoes/suporte", label: "Suporte" },
-  //   ],
-  // },
   { href: "/solucoes", label: "Soluções" },
   { href: "/consultoria", label: "Consultoria" },
   { href: "/blog", label: "Blog" },
@@ -36,56 +29,60 @@ export default function Header() {
     router.push("/");
   };
 
-const pathname = usePathname(); // 👈 obter rota atual
+  const pathname = usePathname(); // 👈 obter rota atual
 
-const renderAuthButtons = () => {
-  if (isAuthenticated === null) return null;
+  const renderAuthButtons = () => {
+    if (isAuthenticated === null) return null;
 
-  return isAuthenticated ? (
-    <>
-      {pathname === "/blog/admin" ? (
-        <Link
-          href="/"
-          className="ml-2 inline-flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md shadow hover:bg-gray-600 transition"
+    return isAuthenticated ? (
+      <>
+        {pathname === "/blog/admin" ? (
+          <Link
+            href="/"
+            className="ml-2 inline-flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-md shadow hover:bg-gray-600 transition"
+          >
+            Voltar
+          </Link>
+        ) : (
+          <Link
+            href="/blog/admin"
+            className="ml-2 inline-flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-md shadow hover:bg-gray-800 transition"
+          >
+            Admin
+          </Link>
+        )}
+
+        <button
+          onClick={handleLogout}
+          className="ml-2 inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition"
         >
-          Voltar
-        </Link>
-      ) : (
-        <Link
-          href="/blog/admin"
-          className="ml-2 inline-flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-md shadow hover:bg-gray-800 transition"
-        >
-          Admin
-        </Link>
-      )}
-
-      <button
-        onClick={handleLogout}
-        className="ml-2 inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition"
+          <LogOut size={16} />
+          Sair
+        </button>
+      </>
+    ) : (
+      <Link
+        href="/login"
+        className="ml-4 inline-flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded-md shadow hover:bg-blue-950 transition"
       >
-        <LogOut size={16} />
-        Sair
-      </button>
-    </>
-  ) : (
-    <Link
-      href="/login"
-      className="ml-4 inline-flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded-md shadow hover:bg-blue-950 transition"
-    >
-      <LogIn size={16} />
-      Entrar
-    </Link>
-  );
-};
+        <LogIn size={16} />
+        Entrar
+      </Link>
+    );
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-200 shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-4">
-        <Link
-          href="/"
-          className="text-2xl font-extrabold tracking-tight text-blue-800 hover:opacity-90 transition"
-        >
-          Werne<span className="text-neutral-900">Tech</span>
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-8 py-0">
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/logo/Wernetech-02.png"
+            alt="WerneTech Logo"
+            width={150}
+            height={40}
+            className="h-24 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}

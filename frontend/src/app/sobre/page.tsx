@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function SobrePage() {
   return (
-    <main className="min-h-screen pt-20 bg-white text-gray-800">
+    <main className="min-h-screen bg-white text-gray-800">
       <section className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-16">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold">
@@ -67,7 +67,7 @@ export default function SobrePage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white border-t border-gray-200">
+      {/* <section className="py-16 bg-white border-t border-gray-200">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-2xl font-bold text-blue-800 mb-8 text-center">
             Nossas Parcerias
@@ -88,9 +88,9 @@ export default function SobrePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="py-16 bg-blue-50">
+      {/* <section className="py-16 bg-blue-50">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold text-blue-800 mb-6">
             Presença Nacional
@@ -105,7 +105,7 @@ export default function SobrePage() {
             className="mx-auto max-w-md"
           />
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

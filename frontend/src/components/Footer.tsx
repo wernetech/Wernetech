@@ -9,9 +9,9 @@ export default function Footer() {
         <div>
           <h3 className="text-base font-semibold mb-3">Contato</h3>
           <ul className="space-y-2 text-sm">
-            <li>📞 (31) 99999-0000</li>
-            <li>✉️ contato@warnetech.com.br</li>
-            <li>📍 Contagem - MG</li>
+            <li>📞 (83) 99120-0828</li>
+            <li>✉️ comercial@wernetech.com</li>
+            <li>📍 Rua das Trincheiras, 194 Sala 16 - Centro, João Pessoa - PB - CEP 58011-000</li>
           </ul>
         </div>
 
@@ -32,7 +32,7 @@ export default function Footer() {
                 Consultoria
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 href="/politica-privacidade"
                 className="hover:text-blue-800 transition"
@@ -44,12 +44,12 @@ export default function Footer() {
               <Link href="/termos" className="hover:text-blue-800 transition">
                 Termos de uso
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
 
         {/* Soluções */}
-        <div>
+        {/* <div>
           <h3 className="text-base font-semibold mb-3">Soluções</h3>
           <ul className="space-y-2 text-sm">
             <li>
@@ -77,7 +77,7 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Mídias Sociais */}
         <div>
@@ -100,7 +100,7 @@ export default function Footer() {
       </div>
 
       <div className="bg-gray-50 py-4 border-t border-gray-200 text-center text-xs text-gray-500">
-        &copy; {new Date().getFullYear()} WerneTech.{" "}
+        &copy; {new Date().getFullYear()} WERNETECH INFORMATICA LTDA. {" "}
         <a
           href="https://drive.google.com/file/d/1QzMIppZCWm2efHcHuTHUgTeZy78HIzpd/view"
           target="_blank"
