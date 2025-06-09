@@ -34,3 +34,8 @@ docker exec -it wernetech_app bash
 
 -Após testar tente conectar ao banco:
 psql -U wernetech_admin -d empresa (troque as variaveis de acordo com o seu banco)
+
+-Comandos reset dentro da vps:
+docker-compose down -v
+docker-compose build --no-cache
+docker-compose up

@@ -2,38 +2,40 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const router = useRouter();
-  const { checkAuth } = useAuth();
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setSuccess("");
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API}/api/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      );
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Erro ao fazer login");
+        setError(data.error || "Erro ao registrar.");
         return;
       }
 
-      await checkAuth();
-      router.push("/");
+      setSuccess("Conta criada com sucesso!");
+      setTimeout(() => router.push("/login"), 2000);
     } catch (err) {
       console.error(err);
       setError("Erro ao conectar com o servidor");
@@ -51,27 +53,27 @@ export default function LoginForm() {
         className="absolute inset-0 h-full w-full object-cover z-0"
       />
 
-      {/* Overlay para contraste */}
+      {/* Overlay escuro */}
       <div className="absolute inset-0 bg-black opacity-60 z-10" />
 
-      {/* Conteúdo dividido em 2 colunas */}
+      {/* Conteúdo dividido */}
       <div className="relative z-20 flex flex-col md:flex-row items-center justify-center h-full px-4 py-8 gap-6 md:gap-12">
         {/* Texto à esquerda */}
-        <div className="text-white max-w-xl mb-12 md:mb-0 md:mr-8 md:w-1/2">
-          <h1 className="text-5xl font-bold mb-4">Login</h1>
-          <p className="text-2xl leading-relaxed">
-            Bem-vindo (a)! Realize seu login para acessar os conteúdos
-            exclusivos produzidos pela equipe Wernetech.
+        <div className="text-white max-w-xl md:mr-8 md:w-1/2">
+          <h1 className="text-5xl font-bold mb-4">Registre-se</h1>
+          <p className="text-lg leading-relaxed">
+            Crie sua conta para ter acesso aos conteúdos exclusivos e serviços
+            personalizados oferecidos pela equipe Wernetech.
           </p>
         </div>
 
-        {/* Form à direita */}
+        {/* Formulário à direita */}
         <div className="bg-white bg-opacity-95 backdrop-blur-lg p-8 rounded-xl max-w-md w-full shadow-md">
           <h2 className="text-xl font-bold text-center text-gray-800 mb-2">
-            Acesse sua conta
+            Criar conta
           </h2>
           <p className="text-sm text-gray-600 text-center mb-6">
-            Utilize seu e-mail corporativo para continuar
+            Registre-se com seu e-mail corporativo
           </p>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
@@ -110,26 +112,24 @@ export default function LoginForm() {
             {error && (
               <div className="text-red-600 text-sm text-center">{error}</div>
             )}
+            {success && (
+              <div className="text-green-600 text-sm text-center">
+                {success}
+              </div>
+            )}
 
             <button
               type="submit"
               disabled={loading}
               className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-md font-semibold transition"
             >
-              {loading ? "Entrando..." : "Entrar"}
+              {loading ? "Registrando..." : "Registrar"}
             </button>
 
             <p className="text-xs text-center text-gray-600 mt-2">
-              Esqueceu sua senha?{" "}
-              <a href="#" className="text-blue-600 hover:underline">
-                Redefinir
-              </a>
-            </p>
-
-            <p className="text-xs text-center text-gray-600">
-              Ainda não tem conta?{" "}
-              <a href="/register" className="text-blue-600 hover:underline">
-                Cadastre-se
+              Já tem uma conta?{" "}
+              <a href="/login" className="text-blue-600 hover:underline">
+                Faça login
               </a>
             </p>
           </form>

@@ -45,7 +45,6 @@ router.post('/login', async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ error: 'Senha incorreta.' });
         }
-
         const token = jwt.sign(
             { id: user.id, email: user.email },
             process.env.JWT_SECRET,
