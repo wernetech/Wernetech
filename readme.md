@@ -28,7 +28,7 @@ docker compose up -d --build
 docker system prune -af
 
 -Remover tudo antigo:
-docker compose down --volumes --remove-orphans
+docker-compose down --volumes --remove-orphans
 
 -Ver as variaveis de ambiente do docker:
 docker compose exec postgres env | Select-String POSTGRES

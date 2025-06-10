@@ -25,7 +25,7 @@ export default function AdminPostForm() {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/me`, {
+        const res = await fetch(`/api/auth/me`, {
           credentials: "include",
         });
         if (!res.ok) {
@@ -52,7 +52,7 @@ export default function AdminPostForm() {
     setLoading(true);
     setSuccess(false);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/post`, {
+      const res = await fetch(`/api/post`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -17,7 +17,7 @@ export default function BlogClient() {
     setLoading(true);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/post?category=${filters.category}&author=${filters.author}&page=${currentPage}`
+        `/api/post?category=${filters.category}&author=${filters.author}&page=${currentPage}`
       );
       const data = await res.json();
       setPosts(data);

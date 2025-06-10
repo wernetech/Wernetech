@@ -36,7 +36,7 @@ export default function ConsultoriaPage() {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/leads`, {
+      const res = await fetch(`/api/leads`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
