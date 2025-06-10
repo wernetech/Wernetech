@@ -12,6 +12,11 @@ services:
       POSTGRES_DB: empresa
     volumes:
       - pgdata:/bitnami/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wernetech_admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
@@ -20,7 +25,8 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       DATABASE_URL: "postgresql://wernetech_admin:admin_9876@postgres:5432/empresa"
       JWT_SECRET: "2fb7b9dc6cf44c0a928b0e9f41f3c9286bb35fef7d1a411c6c88b85b6e007c78"

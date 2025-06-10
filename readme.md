@@ -52,8 +52,6 @@ docker-compose build --no-cache
 docker-compose up
 
 
-
-
 ----- NGINX:
 
 -Abrir o arquivo de config do NGINX:

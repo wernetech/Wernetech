@@ -6,7 +6,16 @@ import { useRouter } from "next/navigation";
 export default function RegisterForm() {
   const router = useRouter();
 
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    cellphone: "",
+    company: "",
+    city: "",
+    state: "",
+  });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -18,26 +27,23 @@ export default function RegisterForm() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const nodes = [];
-    for (let i = 0; i < 50; i++) {
-      nodes.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-      });
-    }
+    const nodes = Array.from({ length: 50 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+    }));
 
-    function updateNodes() {
-      for (const node of nodes) {
+    const updateNodes = () => {
+      nodes.forEach((node) => {
         node.x += node.vx;
         node.y += node.vy;
         if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
         if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-      }
-    }
+      });
+    };
 
-    function drawLines() {
+    const drawLines = () => {
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
@@ -52,9 +58,9 @@ export default function RegisterForm() {
           }
         }
       }
-    }
+    };
 
-    function render() {
+    const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       updateNodes();
       drawLines();
@@ -65,7 +71,7 @@ export default function RegisterForm() {
         ctx.fill();
       });
       requestAnimationFrame(render);
-    }
+    };
 
     render();
 
@@ -75,22 +81,24 @@ export default function RegisterForm() {
     });
   }, []);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      setError("As senhas não coincidem.");
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
-      const res = await fetch(
-        `/api/auth/register`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include", // importante se o servidor exige isso
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(form),
+      });
 
       const data = await res.json();
 
@@ -118,7 +126,7 @@ export default function RegisterForm() {
         <div className="text-white max-w-xl md:mr-8 md:w-1/2">
           <h1 className="text-5xl font-bold mb-4">Crie sua Conta</h1>
           <p className="text-lg leading-relaxed">
-            Preencha o formulário para ter acesso gratuito e imediato aos nossos
+            Preencha o formulário para ter acesso imediato aos nossos
             conteúdos e insights de tecnologia.
           </p>
         </div>
@@ -131,16 +139,20 @@ export default function RegisterForm() {
             Registre-se com seu e-mail corporativo
           </p>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
+          <form
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black"
+            onSubmit={handleSubmit}
+          >
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
                 E-mail corporativo
               </label>
               <input
                 type="email"
+                autoComplete="email"
                 required
-                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                placeholder="seuemail@suaempresa.com.br"
+                placeholder="seuemail@empresa.com.br"
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 value={form.email}
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, email: e.target.value }))
@@ -148,15 +160,16 @@ export default function RegisterForm() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
                 Senha
               </label>
               <input
                 type="password"
+                autoComplete="new-password"
                 required
-                className="mt-1 w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                placeholder="Digite sua senha"
+                placeholder="Crie uma senha forte"
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 value={form.password}
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, password: e.target.value }))
@@ -164,11 +177,105 @@ export default function RegisterForm() {
               />
             </div>
 
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Confirmar Senha
+              </label>
+              <input
+                type="password"
+                autoComplete="new-password"
+                required
+                placeholder="Repita a senha"
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                value={form.confirmPassword}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    confirmPassword: e.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Telefone
+              </label>
+              <input
+                type="tel"
+                autoComplete="tel"
+                placeholder="(31) 91234-5678"
+                required
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                value={form.cellphone}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, cellphone: e.target.value }))
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Empresa
+              </label>
+              <input
+                type="text"
+                autoComplete="organization"
+                placeholder="Nome da empresa"
+                required
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                value={form.company}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, company: e.target.value }))
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Cidade
+              </label>
+              <input
+                type="text"
+                autoComplete="address-level2"
+                placeholder="Ex: Contagem"
+                required
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                value={form.city}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, city: e.target.value }))
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                UF
+              </label>
+              <input
+                type="text"
+                maxLength={2}
+                autoComplete="address-level1"
+                placeholder="MG"
+                required
+                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none uppercase"
+                value={form.state}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    state: e.target.value.toUpperCase(),
+                  }))
+                }
+              />
+            </div>
+
             {error && (
-              <div className="text-red-600 text-sm text-center">{error}</div>
+              <div className="md:col-span-2 text-red-600 text-sm text-center">
+                {error}
+              </div>
             )}
             {success && (
-              <div className="text-green-600 text-sm text-center">
+              <div className="md:col-span-2 text-green-600 text-sm text-center">
                 {success}
               </div>
             )}
@@ -176,30 +283,10 @@ export default function RegisterForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-md font-semibold transition"
+              className="md:col-span-2 w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-md font-semibold transition"
             >
               {loading ? "Registrando..." : "Criar minha conta"}
             </button>
-
-            <p className="text-xs text-center text-gray-600 mt-2">
-              Já tem uma conta?{" "}
-              <a href="/login" className="text-blue-600 hover:underline">
-                Faça login
-              </a>
-            </p>
-
-            <p className="text-xs text-center text-gray-500 mt-4">
-              Ao continuar, você concorda com nossa{" "}
-              <a
-                href="https://drive.google.com/file/d/1QzMIppZCWm2efHcHuTHUgTeZy78HIzpd/view"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-blue-600 transition"
-              >
-                Política de Privacidade
-              </a>
-              .
-            </p>
           </form>
         </div>
       </div>

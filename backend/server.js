@@ -55,16 +55,18 @@ async function iniciarBancoComRetry() {
       await createUsersTable();
       await createPostsTable();
       await createLeadsTable();
+
       console.log("✅ Tabelas verificadas/criadas com sucesso");
-      break;
+      return; // Finaliza com sucesso
     } catch (err) {
       console.error(`❌ Tentativa ${i + 1} falhou:`, err.message);
+
       if (i < tentativas - 1) {
         console.log("⏳ Aguardando 3 segundos para tentar novamente...");
         await delay(3000);
       } else {
-        console.error("🚨 Todas as tentativas falharam.");
-        process.exit(1);
+        console.error("🚨 Todas as tentativas falharam. Encerrando aplicação.");
+        process.exit(1); // Mata a aplicação se falhar todas
       }
     }
   }
@@ -73,10 +75,10 @@ async function iniciarBancoComRetry() {
 iniciarBancoComRetry();
 
 app.get("/teste", (req, res) => {
-  res.status(200).json({message: "Conexão deu certo!"})
-})
+  res.status(200).json({ message: "Conexão deu certo!" });
+});
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`API rodando em http://localhost:${PORT}`);
 });

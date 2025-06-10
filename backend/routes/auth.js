@@ -8,18 +8,20 @@ const router = express.Router();
 
 // Registro
 router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, cellphone, company, city, state } = req.body;
 
-    if (!email || !password)
-        return res.status(400).json({ error: 'Email e senha obrigatórios.' });
+    if (!email || !password || !cellphone || !company || !city || !state) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    }
 
     try {
         const hash = await bcrypt.hash(password, 10);
 
-        await db.query('INSERT INTO users (email, password) VALUES ($1, $2)', [
-            email,
-            hash,
-        ]);
+        await db.query(
+            `INSERT INTO users (email, password, cellphone, company, city, state)
+             VALUES ($1, $2, $3, $4, $5, $6)`,
+            [email, hash, cellphone, company, city, state]
+        );
 
         res.status(201).json({ message: 'Usuário registrado com sucesso.' });
     } catch (err) {
@@ -27,6 +29,7 @@ router.post('/register', async (req, res) => {
         res.status(500).json({ error: 'Erro ao registrar usuário.' });
     }
 });
+
 
 // Login
 router.post('/login', async (req, res) => {
