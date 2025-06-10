@@ -18,6 +18,7 @@ docker logs id(pego no docker ps)
 
 -Subir/atualizar containers:
 docker compose up -d --build
+docker compose build --no-cache
 
 -Atualizar em caso de estiver rodando:
 docker compose down
@@ -26,8 +27,12 @@ docker compose up -d --build
 -Limpar cache:
 docker system prune -af
 
+-Remover tudo antigo:
+docker compose down --volumes --remove-orphans
+
 -Ver as variaveis de ambiente do docker:
 docker compose exec postgres env | Select-String POSTGRES
+No lugar de "postgres" coloca o nome do serviço e no "POSTGRES", a variavel do enviroment que quer ver
 
 -Testar conexão manual:
 docker exec -it wernetech_app bash
