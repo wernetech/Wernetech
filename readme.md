@@ -35,6 +35,12 @@ docker exec -it wernetech_app bash
 -Após testar tente conectar ao banco:
 psql -U wernetech_admin -d empresa (troque as variaveis de acordo com o seu banco)
 
+-Verifique os containers que ainda estão usando a rede:
+docker ps -a --filter network=empresa-wernetech_default
+
+-Força a remoção de containers ainda ativos:
+docker rm -f $(docker ps -aq)
+
 -Comandos reset dentro da vps:
 docker-compose down -v
 docker-compose build --no-cache

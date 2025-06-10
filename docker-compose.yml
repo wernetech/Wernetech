@@ -13,14 +13,12 @@ services:
     volumes:
       - pgdata:/bitnami/postgresql
 
-  app:
-    build: .
-    container_name: wernetech_app
+  backend:
+    build: ./backend
+    container_name: wernetech_backend
     restart: always
     ports:
-      - "3002:3000" # Next.js
-      - "3333:3333" # NestJS
-      - "4000:4000" # Seu backend Express
+      - "4000:4000"
     depends_on:
       - postgres
     environment:
@@ -31,9 +29,17 @@ services:
       SMTP_PORT: 587
       SMTP_USER: quaresma.davi@gmail.com
       SMTP_PASS: aeymdihomjbpvvxv
-    volumes:
-      - /app/node_modules
-      - .:/app
+
+  frontend:
+    build: ./frontend
+    container_name: wernetech_frontend
+    restart: always
+    ports:
+      - "3002:3000"
+    environment:
+      NEXT_PUBLIC_API: http://localhost:4000
+    depends_on:
+      - backend
 
 volumes:
   pgdata:
