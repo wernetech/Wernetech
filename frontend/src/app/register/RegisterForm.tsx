@@ -87,6 +87,7 @@ export default function RegisterForm() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include", // importante se o servidor exige isso
           body: JSON.stringify(form),
         }
       );

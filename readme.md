@@ -45,3 +45,36 @@ docker rm -f $(docker ps -aq)
 docker-compose down -v
 docker-compose build --no-cache
 docker-compose up
+
+
+
+
+----- NGINX:
+
+-Abrir o arquivo de config do NGINX:
+sudo nano /etc/nginx/sites-available/default
+
+-Bloco server { ... }:
+server {
+    listen 80;
+    server_name _;
+
+    location /api/ {
+        proxy_pass http://localhost:4000/;
+    }
+
+    location / {
+        proxy_pass http://localhost:3002/;
+    }
+}
+
+listen 80; → Escuta na porta padrão HTTP.
+server_name _; → Aceita qualquer nome de host (útil quando não tem domínio).
+location /api/ → Tudo que vier de /api/ vai pro backend Express na porta 4000.
+location / → Todo o resto vai pro frontend Next.js na porta 3002.
+
+-Testar a config:
+sudo nginx -t
+
+-Reiniciar o serviço NGINX:
+sudo systemctl restart nginx
