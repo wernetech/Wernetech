@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import leadsRoutes from './routes/leads.js';
 import authRoutes from './routes/auth.js';
 import postRoutes from './routes/posts.js';
+import emailRoutes from './routes/email.js';
 
 import { createLeadsTable } from './database/createLeadsTable.js';
 import { createUsersTable } from './database/createUsersTable.js';
@@ -39,6 +40,7 @@ app.use(cookieParser());
 app.use('/api/leads', leadsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/email', emailRoutes);
 
 // Retry para criação das tabelas
 function delay(ms) {
@@ -69,6 +71,10 @@ async function iniciarBancoComRetry() {
 }
 
 iniciarBancoComRetry();
+
+app.get("/teste", (req, res) => {
+  res.status(200).json({message: "Conexão deu certo!"})
+})
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

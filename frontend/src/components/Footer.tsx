@@ -83,18 +83,18 @@ export default function Footer() {
         <div>
           <h3 className="text-base font-semibold mb-3">Siga a gente</h3>
           <div className="flex gap-4 text-gray-600">
-            <a href="#" aria-label="Facebook" className="hover:text-blue-600">
+            {/* <a href="#" aria-label="Facebook" className="hover:text-blue-600">
               <Facebook size={20} />
             </a>
             <a href="#" aria-label="Instagram" className="hover:text-pink-600">
               <Instagram size={20} />
-            </a>
-            <a href="#" aria-label="Linkedin" className="hover:text-blue-700">
+            </a> */}
+            <a href="https://www.linkedin.com/company/wernetech" aria-label="Linkedin" className="hover:text-blue-700">
               <Linkedin size={20} />
             </a>
-            <a href="#" aria-label="YouTube" className="hover:text-red-600">
+            {/* <a href="#" aria-label="YouTube" className="hover:text-red-600">
               <Youtube size={20} />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

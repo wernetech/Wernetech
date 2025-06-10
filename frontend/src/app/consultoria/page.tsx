@@ -244,9 +244,10 @@ export default function ConsultoriaPage() {
               <span>
                 Li e aceito a{" "}
                 <a
-                  href="/politica"
+                  href="https://drive.google.com/file/d/1QzMIppZCWm2efHcHuTHUgTeZy78HIzpd/view"
                   target="_blank"
-                  className="text-blue-600 underline"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline hover:text-blue-800 transition"
                 >
                   Política de Privacidade
                 </a>

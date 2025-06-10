@@ -60,7 +60,7 @@ export default function SobrePage() {
             </p>
           </div>
           <img
-            src="/equipe-tech.png"
+            src="/sobre.png"
             alt="Equipe de tecnologia WerneTech"
             className="rounded-lg shadow-md"
           />

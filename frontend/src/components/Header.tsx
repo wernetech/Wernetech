@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; // adicione no topo se ainda não tiver
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -11,7 +11,50 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinks = [
   { href: "/", label: "Início" },
   { href: "/sobre", label: "Sobre" },
-  { href: "/solucoes", label: "Soluções" },
+  {
+    label: "Soluções",
+    groupedDropdown: [
+      {
+        title: "Comunicação e Colaboração",
+        items: [
+          { href: "/solucoes/zoom", label: "Zoom" },
+          { href: "/solucoes/googleWorkspace", label: "Google Workspace" },
+        ],
+      },
+      {
+        title: "Nuvem e Infraestrutura",
+        items: [
+          { href: "/solucoes/googleCloud", label: "Google Cloud" },
+          { href: "/solucoes/solarWigs", label: "SolarWinds" },
+        ],
+      },
+      {
+        title: "Soluções de Armazenamento",
+        items: [
+          { href: "/solucoes/infra-hpe", label: "Infraestrutura HPE" },
+          { href: "/solucoes/indilinx", label: "Controladoras Indilinx" },
+        ],
+      },
+      {
+        title: "Soluções de Acesso Remoto",
+        items: [
+          { href: "/solucoes/teamViewer", label: "TeamViewer" },
+          { href: "/solucoes/anyDesk", label: "AnyDesk" },
+        ],
+      },
+      {
+        title: "Cibersegurança e Endpoint",
+        items: [
+          { href: "/solucoes/kasperskyEndpointSecurity", label: "Kaspersky" },
+          { href: "/solucoes/chromeOSCorporativo", label: "ChromeOS" },
+        ],
+      },
+      {
+        title: "",
+        items: [{ href: "/solucoes", label: "Ver todos" }],
+      },
+    ],
+  },
   { href: "/consultoria", label: "Consultoria" },
   { href: "/blog", label: "Blog" },
   { href: "/clientes", label: "Nossos Clientes" },
@@ -29,7 +72,7 @@ export default function Header() {
     router.push("/");
   };
 
-  const pathname = usePathname(); // 👈 obter rota atual
+  const pathname = usePathname();
 
   const renderAuthButtons = () => {
     if (isAuthenticated === null) return null;
@@ -87,10 +130,10 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700 relative">
-          {navLinks.map((link) =>
-            link.dropdown ? (
+          {navLinks.map((link, i) =>
+            link.groupedDropdown ? (
               <div
-                key={link.label}
+                key={link.label || `grouped-${i}`} // adiciona key única aqui
                 className="relative"
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
@@ -102,23 +145,38 @@ export default function Header() {
                     className="group-hover:text-blue-800 transition"
                   />
                 </button>
+
                 <AnimatePresence>
                   {dropdownOpen && (
                     <motion.div
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
-                      className="absolute top-full left-0 mt-2 bg-white border rounded-md shadow-md py-2 w-52 z-50"
+                      className="absolute top-full left-0 mt-2 bg-white border rounded-md shadow-md py-4 px-4 w-[420px] z-50"
                     >
-                      {link.dropdown.map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-blue-800 transition"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
+                      <div className="grid grid-cols-2 gap-4">
+                        {link.groupedDropdown.map((group, gi) => (
+                          <div key={group.title || `group-${gi}`}>
+                            {group.title && (
+                              <p className="text-[10px] font-semibold text-gray-500 uppercase mb-1">
+                                {group.title}
+                              </p>
+                            )}
+                            <ul className="space-y-1">
+                              {group.items.map((item, ii) => (
+                                <li key={item.href || `item-${ii}`}>
+                                  <Link
+                                    href={item.href}
+                                    className="text-sm text-gray-700 hover:text-blue-800 transition"
+                                  >
+                                    {item.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -157,35 +215,6 @@ export default function Header() {
             exit={{ height: 0 }}
             className="md:hidden overflow-hidden px-4 pb-4 flex flex-col gap-3 bg-white border-t border-gray-100 shadow"
           >
-            {navLinks.map((link) =>
-              link.dropdown ? (
-                <div key={link.label} className="flex flex-col">
-                  <span className="font-semibold text-gray-800">
-                    {link.label}
-                  </span>
-                  {link.dropdown.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="text-gray-600 pl-4 py-1 hover:text-blue-800 text-sm"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-gray-700 font-medium hover:text-blue-800 transition"
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
-
             {isAuthenticated ? (
               <>
                 <Link

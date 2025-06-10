@@ -45,7 +45,7 @@ export default function BlogClient() {
           <select
             name="category"
             onChange={handleFilterChange}
-            className="border rounded-md px-4 py-2"
+            className="border rounded-md px-4 py-2 text-black"
             defaultValue=""
           >
             <option value="">Todas as Categorias</option>
@@ -57,7 +57,7 @@ export default function BlogClient() {
           <select
             name="author"
             onChange={handleFilterChange}
-            className="border rounded-md px-4 py-2"
+            className="border rounded-md px-4 py-2 text-black"
             defaultValue=""
           >
             <option value="">Todos os Autores</option>

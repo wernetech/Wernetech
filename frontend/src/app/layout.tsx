@@ -4,6 +4,15 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Script from "next/script";
 import { AuthProvider } from "../context/AuthContext";
+import CookieConsent from "@/components/CookieConsent";
+
+export const metadata = {
+  title: "WerneTech",
+  description: "Seu sistema inteligente",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -12,11 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
+      <head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+      </head>
       <body>
         <AuthProvider>
           <Header />
           {children}
           <Footer />
+          <CookieConsent />
         </AuthProvider>
 
         {/* Tawk.to Chat Widget */}

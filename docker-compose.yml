@@ -3,6 +3,7 @@ version: "3.8"
 services:
   postgres:
     image: bitnami/postgresql:latest
+    restart: always
     ports:
       - "5432:5432"
     environment:
@@ -26,6 +27,10 @@ services:
       DATABASE_URL: "postgresql://wernetech_admin:admin_9876@postgres:5432/empresa"
       JWT_SECRET: "2fb7b9dc6cf44c0a928b0e9f41f3c9286bb35fef7d1a411c6c88b85b6e007c78"
       PORT: 4000
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 587
+      SMTP_USER: quaresma.davi@gmail.com
+      SMTP_PASS: aeymdihomjbpvvxv
     volumes:
       - /app/node_modules
       - .:/app
