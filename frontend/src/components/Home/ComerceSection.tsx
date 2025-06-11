@@ -10,10 +10,10 @@ export default function CommerceSection() {
         {/* Imagem à esquerda */}
         <div className="md:w-1/2">
           <Image
-            src="/commerce/commerce.jpg"
+            src="/products.png"
             alt="Loja Digital"
-            width={600}
-            height={400}
+            width={400}
+            height={200}
             className="rounded-xl shadow-lg"
           />
         </div>
@@ -25,7 +25,7 @@ export default function CommerceSection() {
           </h2>
           <p className="mt-4 text-gray-600 leading-relaxed">
             Adquira licenças originais de{" "}
-            <strong>Microsoft, Autodesk e Adobe</strong> com entrega rápida,
+            <strong>Google Workspace, Zoom e Anydesk</strong> com entrega rápida,
             pagamento facilitado e suporte técnico especializado.
           </p>
 

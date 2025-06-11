@@ -9,8 +9,8 @@ import { Menu, X, LogIn, LogOut, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { href: "/", label: "Início" },
-  { href: "/sobre", label: "Sobre" },
+  // { href: "/", label: "Início" },
+  { href: "/sobre", label: "Sobre Nós" },
   {
     label: "Soluções",
     groupedDropdown: [
@@ -58,6 +58,10 @@ const navLinks = [
   { href: "/consultoria", label: "Consultoria" },
   { href: "/blog", label: "Blog" },
   { href: "/clientes", label: "Nossos Clientes" },
+  { href: "/", label: "Educação" },
+  { href: "/", label: "Loja" },
+  { href: "/", label: "Suporte" },
+  { href: "/", label: "Contato" },
 ];
 
 export default function Header() {

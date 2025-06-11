@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Blog | Insights e Tendências em Tecnologia",
+  title: "Wernetech - Impulsionando o Futuro com Soluções de TI Inteligentes",
   description:
     "Confira artigos, novidades e dicas sobre o universo da tecnologia e transformação digital.",
 };

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { techs } from "@/data/techs";
 
 export const metadata = {
-  title: "Soluções Oficiais | WerneTech",
+  title: "Wernetech - Impulsionando o Futuro com Soluções de TI Inteligentes",
   description:
     "Explore nossas parcerias oficiais com Zoom, Google, Microsoft, Azure e muito mais.",
 };
@@ -34,7 +34,7 @@ export default function SolucoesPage() {
               />
             </div>
             <span className="text-sm font-semibold text-indigo-700 group-hover:text-indigo-900 transition-colors">
-              {tech.cta || "Agende uma demonstração"}
+              {tech.cta}
             </span>
             {/* Adiciona um "aura" sutil no fundo ao passar o mouse */}
             <span className="absolute inset-0 rounded-xl border border-transparent group-hover:border-blue-200 group-hover:bg-blue-50 transition-all duration-300 z-[-1]" />

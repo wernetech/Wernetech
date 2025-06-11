@@ -165,7 +165,7 @@ export default function ConsultoriaPage() {
                   onChange={handleChange}
                   required
                   className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="voce@empresa.com"
+                  placeholder="Digite seu e-mail"
                 />
               </div>
               <div>

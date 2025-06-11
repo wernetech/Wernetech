@@ -79,6 +79,7 @@ app.get("/teste", (req, res) => {
 });
 
 const PORT = process.env.PORT;
+
 app.listen(PORT, () => {
   console.log(`API rodando em http://localhost:${PORT}`);
 });

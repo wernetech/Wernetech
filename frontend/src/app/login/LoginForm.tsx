@@ -137,7 +137,7 @@ export default function LoginForm() {
                 type="email"
                 required
                 className="mt-1 w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                placeholder="admin@empresa.com"
+                placeholder="Digite seu e-mail"
                 value={form.email}
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, email: e.target.value }))
@@ -175,9 +175,13 @@ export default function LoginForm() {
 
             <p className="text-xs text-center text-gray-600 mt-2">
               Esqueceu sua senha?{" "}
-              <a href="#" className="text-blue-600 hover:underline">
+              <button
+                type="button"
+                onClick={() => router.push("/forgotPassword")}
+                className="text-blue-600 hover:underline cursor-pointer"
+              >
                 Redefinir
-              </a>
+              </button>
             </p>
 
             <p className="text-xs text-center text-gray-600">

@@ -1,7 +1,7 @@
 import LoginForm from "./LoginForm";
 
 export const metadata = {
-  title: "Login | Acesso ao Portal",
+  title: "Wernetech - Impulsionando o Futuro com Soluções de TI Inteligentes",
   description:
     "Entre em sua conta para acessar serviços, suporte e soluções personalizadas.",
 };

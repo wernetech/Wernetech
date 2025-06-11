@@ -12,7 +12,7 @@ export default function EadSection() {
           </h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-lg">
             Capacite sua equipe com treinamentos EAD nos principais softwares do
-            mercado: <strong>Microsoft, Adobe, Autodesk</strong> e muito mais.
+            mercado: <strong>Google Workspace, Google Cloud, Zoom</strong> e muito mais.
           </p>
         </div>
 
@@ -20,16 +20,16 @@ export default function EadSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {[
             {
-              title: "Autodesk AutoCAD",
-              image: "/cursos/autocad.png",
+              title: "Google Workspace",
+              image: "/solucoes/google1.webp",
             },
             {
-              title: "Microsoft Teams",
-              image: "/cursos/teams.png",
+              title: "Google Cloud",
+              image: "/solucoes/cloud1.png",
             },
             {
-              title: "Adobe Photoshop",
-              image: "/cursos/photoshop.png",
+              title: "Zoom",
+              image: "/solucoes/zoom1.jpg",
             },
           ].map((curso, i) => (
             <div

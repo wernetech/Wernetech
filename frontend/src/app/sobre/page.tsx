@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Sobre Nós | WerneTech Informática",
+  title: "Wernetech - Impulsionando o Futuro com Soluções de TI Inteligentes",
   description:
     "Conheça nossa trajetória, valores e compromissos como empresa referência em soluções digitais no Brasil.",
 };

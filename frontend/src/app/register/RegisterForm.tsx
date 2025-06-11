@@ -136,7 +136,7 @@ export default function RegisterForm() {
             Criar conta
           </h2>
           <p className="text-sm text-gray-600 text-center mb-6">
-            Registre-se com seu e-mail corporativo
+            Registre-se com seu e-mail
           </p>
 
           <form
@@ -145,13 +145,13 @@ export default function RegisterForm() {
           >
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-600 mb-1">
-                E-mail corporativo
+                E-mail 
               </label>
               <input
                 type="email"
                 autoComplete="email"
                 required
-                placeholder="seuemail@empresa.com.br"
+                placeholder="Digite seu e-mail"
                 className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 value={form.email}
                 onChange={(e) =>

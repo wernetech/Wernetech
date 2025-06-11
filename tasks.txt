@@ -1,0 +1,12 @@
+Tarefa 2: Implementação de Novas Landing Pages
+Quatro novas landing pages foram criadas. O código HTML de cada uma foi 
+fornecido em separado.
+
+Substituição de Imagens (Placeholders):
+
+Em cada uma das novas páginas (Google Workspace, Google Cloud, Zoom Workplace, 
+Anydesk), localize as tags <img> com URLs do site placehold.co.
+
+Substitua essas imagens pelas versões finais fornecidas pelo cliente. 
+Lembre-se de otimizar todas as imagens para a web.
+

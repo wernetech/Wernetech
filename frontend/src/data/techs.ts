@@ -10,7 +10,7 @@ export const techs = [
     title: "Plataforma de comunicação e colaboração unificada",
     description:
       "Faça conexões significativas com reuniões, chat em equipe, quadro de compartilhamento, telefone e muito mais em uma oferta.",
-    cta: "Ver o Zoom",
+    cta: "Ver Zoom",
   },
   {
     name: "Google Workspace",
@@ -45,7 +45,7 @@ export const techs = [
     title: "Armazenamento Rápido, Confiável e Seguro para Dados Críticos",
     description:
       "Com as ferramentas poderosas do SolarWinds, oferecemos visibilidade de ponta a ponta sobre sua infraestrutura. Monitoramos o desempenho em tempo real, analisamos o tráfego de rede, gerenciamos configurações e recebemos alertas inteligentes antes que pequenos problemas afetem a experiência do usuário final, garantindo a máxima eficiência operacional do seu ambiente, seja ele local ou na nuvem.",
-    cta: "Ver SolarWigs",
+    cta: "Ver Solarwinds",
   },
   {
     name: "Kaspersky Endpoint Security",
@@ -67,7 +67,7 @@ export const techs = [
     title: "Gestão Eficiente e Segurança Nativa com ChromeOS",
     description:
       "Google ChromeOS: Modernize a gestão e a segurança dos seus dispositivos com o ChromeOS. Implementamos Chromebooks e outras soluções que oferecem uma experiência de usuário rápida e segura por natureza. Com atualizações automáticas e proteção multicamadas integrada, o ChromeOS reduz drasticamente a superfície de ataque e simplifica o gerenciamento do parque de máquinas.",
-    cta: "Ver ChromeOS Corporativo",
+    cta: "Ver ChromeOS",
   },
   {
     name: "TeamViewer",
