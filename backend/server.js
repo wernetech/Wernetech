@@ -17,11 +17,10 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:3002',
-  'http://localhost:3000',
+  'http://localhost',
+  'https://localhost',
   'http://5.161.71.249',
-  'http://5.161.71.249:3002',
-  'http://5.161.71.249:3000',
+  'https://5.161.71.249',
   'https://wernetech.com',
   'http://wernetech.com'
 ];

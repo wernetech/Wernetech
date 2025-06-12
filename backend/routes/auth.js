@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { db } from '../database/db.js';
 import verifyAuth from '../middleware/verifyAuth.js';
+import { randomBytes } from 'crypto';
+import { sendEmail } from '../utils/emailService.js';
 
 const router = express.Router();
 
@@ -103,7 +105,7 @@ router.post('/forgot-password', async (req, res) => {
             return res.status(404).json({ error: 'Usuário não encontrado com este e-mail' });
         }
 
-        const token = crypto.randomBytes(32).toString('hex');
+        const token = randomBytes(32).toString('hex');
         const expires = Date.now() + 1000 * 60 * 60; // 1h
 
         await db.query(
@@ -141,8 +143,6 @@ router.post('/reset-password', async (req, res) => {
         const user = result.rows[0];
         if (!user) return res.status(400).json({ error: 'Token inválido ou expirado' });
 
-        // criptografar a senha com bcrypt
-        const bcrypt = await import('bcrypt');
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await db.query(
