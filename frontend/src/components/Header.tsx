@@ -58,9 +58,9 @@ const navLinks = [
   { href: "/consultoria", label: "Consultoria" },
   { href: "/blog", label: "Blog" },
   { href: "/clientes", label: "Nossos Clientes" },
-  { href: "/", label: "Educação" },
-  { href: "/", label: "Loja" },
-  { href: "/", label: "Suporte" },
+  // { href: "/", label: "Educação" },
+  // { href: "/", label: "Loja" },
+  // { href: "/", label: "Suporte" },
   { href: "/", label: "Contato" },
 ];
 

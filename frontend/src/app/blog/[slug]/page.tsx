@@ -1,11 +1,8 @@
 import { notFound } from "next/navigation";
 import { type SlugPageProps } from "../../../types/pages"; // caminho pode variar dependendo do seu tsconfig
 
-// Use variável do lado do servidor
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:4000";
-
 async function getPost(slug: string) {
-  const res = await fetch(`${API_BASE_URL}/api/post/${slug}`, {
+  const res = await fetch(`/api/post/${slug}`, {
     next: { revalidate: 60 }, // opcional: ISR
   });
 

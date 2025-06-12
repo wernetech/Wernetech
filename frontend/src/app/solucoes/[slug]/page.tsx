@@ -47,7 +47,7 @@ export default function SolucaoLanding({ params }: Props) {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/email/send2`,
+        `/api/email/send2`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
