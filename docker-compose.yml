@@ -43,8 +43,20 @@ services:
     ports:
       - "3002:3000"
     environment:
-      NEXT_PUBLIC_API: http://wernetech_backend:4000
+      NEXT_PUBLIC_API: http://5.161.71.249/api
     depends_on:
+      - backend
+  
+  nginx:
+    image: nginx:latest
+    container_name: wernetech_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
       - backend
 
 volumes:

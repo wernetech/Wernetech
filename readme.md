@@ -15,6 +15,7 @@ docker-compose up -d
 
 -Chegar o log do docker:
 docker logs id(pego no docker ps)
+docker logs -f id(pego no docker ps)
 
 -Subir/atualizar containers:
 docker compose up -d --build
@@ -45,6 +46,9 @@ docker ps -a --filter network=empresa-wernetech_default
 
 -Força a remoção de containers ainda ativos:
 docker rm -f $(docker ps -aq)
+
+-Comando pra ver as portas que o docker ta rodando:
+docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}"
 
 -Comandos reset dentro da vps:
 docker-compose down -v
@@ -78,6 +82,9 @@ location / → Todo o resto vai pro frontend Next.js na porta 3002.
 
 -Testar a config:
 sudo nginx -t
+
+-Ver se está rodando:
+sudo systemctl status nginx
 
 -Reiniciar o serviço NGINX:
 sudo systemctl restart nginx

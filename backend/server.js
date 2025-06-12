@@ -19,8 +19,11 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3002',
   'http://localhost:3000',
+  'http://5.161.71.249',
   'http://5.161.71.249:3002',
   'http://5.161.71.249:3000',
+  'https://wernetech.com',
+  'http://wernetech.com'
 ];
 
 app.use(cors({
