@@ -11,6 +11,7 @@ export const techs = [
     description:
       "Faça conexões significativas com reuniões, chat em equipe, quadro de compartilhamento, telefone e muito mais em uma oferta.",
     cta: "Ver Zoom",
+    customPage: true,
   },
   {
     name: "Google Workspace",
@@ -23,6 +24,7 @@ export const techs = [
     description:
       "Revolucione a colaboração da sua equipe com as ferramentas inteligentes do Google Workspace. O Google Meet, integrado nativamente ao Gmail, Agenda e Drive, permite videoconferências seguras e de alta qualidade diretamente do navegador. Utilize recursos de IA, como cancelamento de ruído e legendas automáticas, para tornar suas reuniões mais acessíveis e produtivas.",
     cta: "Ver Google Workspace",
+    customPage: true,
   },
   {
     name: "Google Cloud",
@@ -35,6 +37,7 @@ export const techs = [
     description:
       "Como parceiros Google Cloud, ajudamos sua empresa a aproveitar todo o poder da infraestrutura global do Google. Migre cargas de trabalho, modernize aplicações, utilize Big Data e Machine Learning para gerar insights e inove com segurança. Oferecemos desde o planejamento estratégico até a implementação e o gerenciamento de soluções em computação, armazenamento e banco de dados na GCP.",
     cta: "Ver Google Cloud",
+    customPage: true,
   },
   {
     name: "Infraestrutura de Armazenamento Solar Wigs",
@@ -90,6 +93,7 @@ export const techs = [
     description:
       "Experimente a performance superior do acesso remoto com o AnyDesk. Sua tecnologia leve e inovadora garante conexões rápidas e fluidas, mesmo em condições de rede adversas, proporcionando uma experiência de uso responsiva e sem interrupções para acesso a desktops e servidores.",
     cta: "Ver AnyDesk",
+    customPage: true,
   },
   {
     name: "Infraestrutura HPE",
@@ -101,6 +105,7 @@ export const techs = [
     description:
       "Infraestrutura HPE (Hewlett Packard Enterprise): Como base de nossas soluções, utilizamos servidores e sistemas de armazenamento da HPE, líder global em infraestrutura de TI. Isso garante uma arquitetura confiável, escalável e segura, pronta para o data center, a nuvem e a borda (edge).",
     cta: "Ver Infraestrutura HPE",
+    observation: true,
   },
   {
     name: "Indilinx",
@@ -112,5 +117,6 @@ export const techs = [
     description:
       "Tecnologia de Controladoras Indilinx: Para garantir a máxima velocidade, integramos hardware com a tecnologia de controladoras de SSD da Indilinx. Isso resulta em sistemas com tempos de resposta ultrarrápidos, maior eficiência energética e durabilidade, acelerando o acesso a bancos de dados, aplicações e sistemas virtualizados.",
     cta: "Ver Indilinx",
+    observation: true,
   },
 ];

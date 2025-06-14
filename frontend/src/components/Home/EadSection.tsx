@@ -8,11 +8,19 @@ export default function EadSection() {
         {/* Título + descrição */}
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight">
-            Plataforma de Cursos Online WerneTech
+            Vem aí: A Nova Plataforma de Cursos Wernetech
           </h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-lg">
-            Capacite sua equipe com treinamentos EAD nos principais softwares do
-            mercado: <strong>Google Workspace, Google Cloud, Zoom</strong> e muito mais.
+            Estamos construindo um novo espaço de aprendizado para ajudar sua
+            equipe a ir além. Em breve, você terá acesso a treinamentos práticos
+            e detalhados, ministrados por nossos especialistas, para dominar as
+            ferramentas que definem o futuro do trabalho:{" "}
+            <strong>Zoom Workplace</strong>, <strong>Google Workspace</strong> e{" "}
+            <strong>Google Cloud</strong> .
+          </p>
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-lg">
+            Deixe seu contato e seja o primeiro a saber do lançamento. Garanta
+            acesso a conteúdos e condições especiais que preparamos para você.
           </p>
         </div>
 
@@ -56,10 +64,10 @@ export default function EadSection() {
         {/* Botão */}
         <div className="text-center mt-14">
           <Link
-            href="/plataforma"
+            href="/temporario"
             className="inline-block bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg text-sm font-medium shadow-md transition"
           >
-            Acessar Plataforma Completa
+            Quero ser o primeiro a saber
           </Link>
         </div>
       </div>

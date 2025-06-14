@@ -18,21 +18,53 @@ router.post('/register', async (req, res) => {
 
     try {
         const hash = await bcrypt.hash(password, 10);
+        const token = randomBytes(32).toString('hex');
 
         await db.query(
-            `INSERT INTO users (email, password, cellphone, company, city, state)
-             VALUES ($1, $2, $3, $4, $5, $6)`,
-            [email, hash, cellphone, company, city, state]
+            `INSERT INTO users (email, password, cellphone, company, city, state, verified, verification_token)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+            [email, hash, cellphone, company, city, state, false, token]
         );
 
-        res.status(201).json({ message: 'Usuário registrado com sucesso.' });
+        const confirmLink = `http://localhost/confirm-email?token=${token}`;
+
+        await sendEmail({
+            to: email,
+            subject: 'Confirmação de e-mail - WerneTech',
+            html: `<p>Bem-vindo à WerneTech! Para ativar sua conta, clique no link abaixo:</p><p><a href="${confirmLink}">${confirmLink}</a></p>`
+        });
+
+        res.status(201).json({ message: 'Usuário registrado. Verifique seu e-mail para ativar a conta.' });
     } catch (err) {
         console.error('Erro no registro:', err);
         res.status(500).json({ error: 'Erro ao registrar usuário.' });
     }
 });
 
+// Confirmar e-mail
+router.get('/confirm-email', async (req, res) => {
+    const { token } = req.query;
 
+    if (!token) return res.status(400).json({ error: 'Token de verificação ausente.' });
+
+    try {
+        const result = await db.query(
+            'UPDATE users SET verified = true, verification_token = NULL WHERE verification_token = $1 RETURNING id',
+            [token]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(400).json({ error: 'Token inválido ou expirado.' });
+        }
+
+        res.status(200).json({ message: 'Conta verificada com sucesso!' });
+    } catch (err) {
+        console.error('Erro na verificação de conta:', err);
+        res.status(500).json({ error: 'Erro interno na verificação de conta.' });
+    }
+});
+
+// Login
 // Login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
@@ -50,6 +82,12 @@ router.post('/login', async (req, res) => {
         if (!isValid) {
             return res.status(401).json({ error: 'Senha incorreta.' });
         }
+
+        // ⚠️ Novo bloqueio
+        if (!user.verified) {
+            return res.status(403).json({ error: 'Confirme seu e-mail antes de fazer login.' });
+        }
+
         const token = jwt.sign(
             { id: user.id, email: user.email },
             process.env.JWT_SECRET,
@@ -59,21 +97,23 @@ router.post('/login', async (req, res) => {
         res
             .cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // ✅ false em dev
+                secure: process.env.NODE_ENV === 'production',
                 sameSite: 'lax',
                 maxAge: 7 * 24 * 60 * 60 * 1000,
-                path: '/', // ✅ necessário para o clearCookie funcionar
+                path: '/',
             })
             .status(200)
             .json({
                 message: 'Login bem-sucedido.',
                 user: { id: user.id, email: user.email },
+                admin: user.admin,
             });
     } catch (err) {
         console.error('Erro no login:', err);
         res.status(500).json({ error: 'Erro no login.' });
     }
 });
+
 
 // Verificar sessão
 router.get('/me', verifyAuth, (req, res) => {
@@ -86,7 +126,7 @@ router.post('/logout', (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        path: '/', // ✅ precisa bater com o login
+        path: '/',
     });
 
     res.status(200).json({ message: 'Logout realizado com sucesso.' });
@@ -97,7 +137,6 @@ router.post('/forgot-password', async (req, res) => {
     if (!email) return res.status(400).json({ error: 'Email obrigatório' });
 
     try {
-        // Verifica se o e-mail existe
         const userResult = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = userResult.rows[0];
 
@@ -106,14 +145,14 @@ router.post('/forgot-password', async (req, res) => {
         }
 
         const token = randomBytes(32).toString('hex');
-        const expires = Date.now() + 1000 * 60 * 60; // 1h
+        const expires = Date.now() + 1000 * 60 * 60;
 
         await db.query(
             'UPDATE users SET reset_token = $1, reset_token_expires = $2 WHERE email = $3',
             [token, new Date(expires), email]
         );
 
-        const resetLink = `http://5.161.71.249:3002/reset-password?token=${token}`;
+        const resetLink = `http://localhost/reset-password?token=${token}`;
 
         await sendEmail({
             to: email,
@@ -128,7 +167,6 @@ router.post('/forgot-password', async (req, res) => {
     }
 });
 
-// 2. Rota para redefinir a senha
 router.post('/reset-password', async (req, res) => {
     const { token, password } = req.body;
 
@@ -157,7 +195,6 @@ router.post('/reset-password', async (req, res) => {
     }
 });
 
-// Debug (listar todos os usuários)
 router.get('/', async (req, res) => {
     try {
         const result = await db.query('SELECT * FROM users');

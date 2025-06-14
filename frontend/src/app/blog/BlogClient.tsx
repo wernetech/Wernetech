@@ -38,7 +38,7 @@ export default function BlogClient() {
     <main className="min-h-screen bg-gray-50 py-12 px-4">
       <section className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-blue-800 mb-6 text-center">
-          Blog WerneTech
+          Blog
         </h1>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">

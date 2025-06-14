@@ -11,12 +11,16 @@ export async function createUsersTable() {
         company VARCHAR(100) NOT NULL,
         city VARCHAR(100) NOT NULL,
         state VARCHAR(2) NOT NULL,
+        verified BOOLEAN DEFAULT false,
+        verification_token TEXT,
         reset_token TEXT,
+        admin BOOLEAN DEFAULT false,
         reset_token_expires TIMESTAMP,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
+
     console.log('Tabela "users" verificada/criada com sucesso!');
   } catch (error) {
     console.error('Erro ao criar tabela users:', error);

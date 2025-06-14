@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 :root {
   --background: #ffffff;
@@ -10,6 +12,18 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
+  --font-inter1: "Inter", sans-serif;
+}
+
+@layer utilities {
+  .font-inter {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -0.2px; /* aproxima levemente as letras */
+    font-size: 0.9375rem;    /* 15px para parecer mais com Inter */
+    line-height: 1.5;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

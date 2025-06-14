@@ -2,9 +2,17 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
+type UserType = {
+  id: number;
+  email: string;
+  admin: boolean;
+};
+
 type AuthContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
+  user: UserType | null;
+  setUser: (user: UserType | null) => void;
   checkAuth: () => Promise<void>;
   logout: () => Promise<void>;
 };
@@ -12,21 +20,34 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
+  user: null,
+  setUser: () => {},
   checkAuth: async () => {},
   logout: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<UserType | null>(null);
 
   const checkAuth = async () => {
     try {
       const res = await fetch(`/api/auth/me`, {
         credentials: "include",
       });
-      setIsAuthenticated(res.ok);
+
+      if (!res.ok) throw new Error();
+
+      const data = await res.json();
+      setUser({
+        id: data.user.id,
+        email: data.user.email,
+        admin: data.user.admin,
+      });
+      setIsAuthenticated(true);
     } catch {
       setIsAuthenticated(false);
+      setUser(null);
     }
   };
 
@@ -36,6 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       credentials: "include",
     });
     setIsAuthenticated(false);
+    setUser(null);
   };
 
   useEffect(() => {
@@ -44,7 +66,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, checkAuth, logout }}
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        user,
+        setUser,
+        checkAuth,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

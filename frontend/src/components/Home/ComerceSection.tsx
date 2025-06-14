@@ -21,25 +21,27 @@ export default function CommerceSection() {
         {/* Conteúdo à direita */}
         <div className="md:w-1/2 text-center md:text-left">
           <h2 className="text-3xl font-bold text-blue-800">
-            Licenças Oficiais para sua Empresa
+            Uma Nova Forma de Gerenciar suas Licenças está Chegando
           </h2>
           <p className="mt-4 text-gray-600 leading-relaxed">
-            Adquira licenças originais de{" "}
-            <strong>Google Workspace, Zoom e Anydesk</strong> com entrega rápida,
-            pagamento facilitado e suporte técnico especializado.
+            Estamos desenvolvendo um portal exclusivo para revolucionar a gestão
+            das suas licenças de software. Imagine centralizar o faturamento de{" "}
+            <strong>Zoom Workplace</strong>, <strong>Google Workspace</strong> e{" "}
+            <strong>Anydesk</strong>, otimizar seus custos com nossa consultoria
+            e ter um canal de suporte prioritário, tudo em um só lugar. A
+            complexidade de hoje será a simplicidade de amanhã.
           </p>
 
-          <ul className="mt-6 space-y-2 text-sm text-gray-700">
-            <li>✔️ Entrega automática por e-mail</li>
-            <li>✔️ Licença original com nota fiscal</li>
-            <li>✔️ Pagamento facilitado por boleto ou Pix</li>
-          </ul>
+          <p className="mt-4 text-gray-600 leading-relaxed">
+            Cadastre-se para ser notificado sobre o lançamento e descubra como
+            vamos facilitar a gestão de tecnologia na sua empresa.
+          </p>
 
           <Link
-            href="/loja"
+            href="/temporario"
             className="mt-6 inline-block bg-blue-700 text-white px-6 py-3 rounded-md shadow hover:bg-blue-800 transition"
           >
-            Acessar Loja Completa
+            Tenho interesse
           </Link>
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function SolucoesPage() {
       </h1>
 
       {/* Grid de logos + botão */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 px-4 md:px-16">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-20 px-4 md:px-16">
         {techs.map((tech, index) => (
           <Link
             key={index}
@@ -66,6 +66,7 @@ export default function SolucoesPage() {
                 width={700}
                 height={400}
                 className="rounded-lg shadow"
+                unoptimized
               />
             </div>
             <div className="flex-1 text-center lg:text-left">

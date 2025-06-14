@@ -4,7 +4,11 @@ import { useState } from "react";
 import { notFound } from "next/navigation";
 import { techs } from "../../../data/techs";
 import { Outfit } from "next/font/google";
+import ZoomPage from "../../../components/custom/ZoomPage";
 import Image from "next/image";
+import GoogleWorkspace from "../../../components/custom/GoogleWorspace";
+import AnyDeskPage from "@/components/custom/AnyDesk";
+import GoogleCloudPage from "@/components/custom/GoogleCloud";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -28,13 +32,16 @@ export default function SolucaoLanding({ params }: Props) {
     company: "",
     role: "",
     licenses: "",
+    observation: "",
   });
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -45,15 +52,14 @@ export default function SolucaoLanding({ params }: Props) {
     setLoading(true);
     setSuccess(false);
 
+    const endpoint = tech.observation ? "/api/email/send4" : "/api/email/send2";
+
     try {
-      const res = await fetch(
-        `/api/email/send2`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...form, solution: tech.name }),
-        }
-      );
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, solution: tech.name }),
+      });
 
       if (res.ok) {
         setSuccess(true);
@@ -64,6 +70,7 @@ export default function SolucaoLanding({ params }: Props) {
           company: "",
           role: "",
           licenses: "",
+          observation: "",
         });
       } else {
         alert("Erro ao enviar o contato.");
@@ -73,6 +80,22 @@ export default function SolucaoLanding({ params }: Props) {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (tech.customPage && tech.slug === "zoom") {
+    return <ZoomPage />;
+  }
+
+  if (tech.customPage && tech.slug === "googleWorkspace") {
+    return <GoogleWorkspace />;
+  }
+
+  if (tech.customPage && tech.slug === "anyDesk") {
+    return <AnyDeskPage />;
+  }
+
+  if (tech.customPage && tech.slug === "googleCloud") {
+    return <GoogleCloudPage />;
   }
 
   return (
@@ -151,19 +174,32 @@ export default function SolucaoLanding({ params }: Props) {
               <option>Outros</option>
             </select>
 
-            <select
-              name="licenses"
-              value={form.licenses}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Quantas licenças você precisa?*</option>
-              <option>1-10</option>
-              <option>11-50</option>
-              <option>51-100</option>
-              <option>+100</option>
-            </select>
+            {!tech.observation && (
+              <select
+                name="licenses"
+                value={form.licenses}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Quantas licenças você precisa?*</option>
+                <option>1-10</option>
+                <option>11-50</option>
+                <option>51-100</option>
+                <option>+100</option>
+              </select>
+            )}
+
+            {tech.observation && (
+              <textarea
+                name="observation"
+                value={form.observation}
+                onChange={handleChange}
+                placeholder="Digite sua necessidade ou observação"
+                required
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            )}
 
             {success && (
               <p className="text-green-600 text-sm text-center">
