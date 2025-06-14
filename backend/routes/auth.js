@@ -31,7 +31,113 @@ router.post('/register', async (req, res) => {
         await sendEmail({
             to: email,
             subject: 'Confirmação de e-mail - WerneTech',
-            html: `<p>Bem-vindo à WerneTech! Para ativar sua conta, clique no link abaixo:</p><p><a href="${confirmLink}">${confirmLink}</a></p>`
+            html: `
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                    <head>
+                        <meta charset="UTF-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+                        <title>Confirme seu E-mail</title>
+                        <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            font-family: Arial, sans-serif;
+                            background-color: #f4f7f6;
+                        }
+                        table {
+                            border-spacing: 0;
+                        }
+                        .wrapper {
+                            width: 100%;
+                            table-layout: fixed;
+                            background-color: #f4f7f6;
+                            padding: 40px 0;
+                        }
+                        .main {
+                            background-color: #ffffff;
+                            margin: 0 auto;
+                            width: 100%;
+                            max-width: 600px;
+                            border-spacing: 0;
+                            color: #333333;
+                            border-radius: 12px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                            overflow: hidden;
+                        }
+                        .header {
+                            background-color: #3B82F6;
+                            color: #ffffff;
+                            padding: 30px;
+                            text-align: center;
+                        }
+                        .header img {
+                            max-height: 50px;
+                        }
+                        .content {
+                            padding: 30px 40px;
+                        }
+                        .content h2 {
+                            font-size: 22px;
+                            margin-top: 0;
+                            margin-bottom: 20px;
+                            color: #3B82F6;
+                        }
+                        .content p {
+                            font-size: 16px;
+                            line-height: 1.6;
+                            color: #444444;
+                        }
+                        .button {
+                            display: inline-block;
+                            margin-top: 24px;
+                            padding: 12px 24px;
+                            background-color: #3B82F6;
+                            color: #ffffff;
+                            text-decoration: none;
+                            border-radius: 6px;
+                            font-weight: bold;
+                        }
+                        .footer {
+                            background-color: #E5E7EB;
+                            color: #777777;
+                            padding: 20px;
+                            text-align: center;
+                            font-size: 12px;
+                        }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="wrapper">
+                        <table class="main">
+                            <tr class="header">
+                            <td>
+                                <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" />
+                            </td>
+                            </tr>
+                            <tr>
+                            <td class="content">
+                                <h2>Confirmação de E-mail</h2>
+                                <p>Olá,</p>
+                                <p>Obrigado por se registrar na <strong>WerneTech</strong>.</p>
+                                <p>Para ativar sua conta, clique no botão abaixo:</p>
+                                <p>
+                                <a href="${confirmLink}" class="button">Ativar Conta</a>
+                                </p>
+                                <p>Se você não solicitou este registro, pode ignorar esta mensagem.</p>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td class="footer">
+                                © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                            </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </body>
+                </html>
+                    `
         });
 
         res.status(201).json({ message: 'Usuário registrado. Verifique seu e-mail para ativar a conta.' });
@@ -64,7 +170,6 @@ router.get('/confirm-email', async (req, res) => {
     }
 });
 
-// Login
 // Login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;

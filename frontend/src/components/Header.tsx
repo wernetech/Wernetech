@@ -62,7 +62,7 @@ const navLinks = [
 export default function Header() {
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { isAuthenticated, checkAuth, logout } = useAuth();
+  const { isAuthenticated, user, checkAuth, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();

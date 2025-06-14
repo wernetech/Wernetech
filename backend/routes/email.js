@@ -105,33 +105,36 @@ router.post("/send", async (req, res) => {
                 </style>
                 </head>
                 <body>
-                <div class="wrapper">
-                    <table class="main">
-                    <tr class="header">
-                        <td><h1>WerneTech</h1></td>
-                    </tr>
-                    <tr>
-                        <td class="content">
-                        <h2>📨 Novo Contato via Consultoria</h2>
-                        <table class="lead-info">
-                            <tr><td><strong>Nome:</strong> ${name}</td></tr>
-                            <tr><td><strong>E-mail:</strong> ${email}</td></tr>
-                            <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
-                            <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
-                            <tr><td><strong>Cargo:</strong> ${position || "-"}</td></tr>
-                            <tr><td><strong>Segmento:</strong> ${segment || "-"}</td></tr>
-                            <tr><td><strong>Mensagem:</strong><br>${message}</td></tr>
+                    <div class="wrapper">
+                        <table class="main">
+                        <tr class="header">
+                            <td style="text-align: center;">
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="content">
+                            <h2>📨 Novo Contato via Consultoria</h2>
+                            <table class="lead-info">
+                                <tr><td><strong>Nome:</strong> ${name}</td></tr>
+                                <tr><td><strong>E-mail:</strong> ${email}</td></tr>
+                                <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
+                                <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
+                                <tr><td><strong>Cargo:</strong> ${position || "-"}</td></tr>
+                                <tr><td><strong>Segmento:</strong> ${segment || "-"}</td></tr>
+                                <tr><td><strong>Mensagem:</strong><br>${message}</td></tr>
+                            </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="footer">
+                            © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                            </td>
+                        </tr>
                         </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="footer">
-                        © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
-                        </td>
-                    </tr>
-                    </table>
-                </div>
-                </body>
+                    </div>
+                    </body>
+
                 </html>
                 `
         });
@@ -240,7 +243,9 @@ router.post("/send2", async (req, res) => {
                 <div class="wrapper">
                     <table class="main">
                     <tr class="header">
-                        <td><h1>WerneTech</h1></td>
+                        <td style="text-align: center;">
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                        </td>
                     </tr>
                     <tr>
                         <td class="content">
@@ -370,7 +375,9 @@ router.post("/send4", async (req, res) => {
                 <div class="wrapper">
                     <table class="main">
                     <tr class="header">
-                        <td><h1>WerneTech</h1></td>
+                        <td style="text-align: center;">
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            </td>
                     </tr>
                     <tr>
                         <td class="content">
@@ -501,7 +508,9 @@ router.post("/send3", async (req, res) => {
                 <div class="wrapper">
                     <table class="main">
                     <tr class="header">
-                        <td><h1>WerneTech</h1></td>
+                        <td style="text-align: center;">
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            </td>
                     </tr>
                     <tr>
                         <td class="content">

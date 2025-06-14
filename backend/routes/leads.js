@@ -1,6 +1,7 @@
 import express from 'express';
 import { db } from '../database/db.js';
 import { z } from 'zod';
+import { sendEmail } from '../utils/emailService.js';
 
 const router = express.Router();
 
@@ -32,9 +33,39 @@ router.post('/', async (req, res) => {
             [name, email, phone, company, position, segment, message]
         );
 
-        res.status(201).json({ message: 'Lead salvo com sucesso!' });
+        // Envio de e-mail
+        const htmlContent = `
+      <body style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+          <div style="background: #0d47a1; padding: 20px; text-align: center;">
+            <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" style="max-height: 60px;" />
+          </div>
+          <div style="padding: 30px;">
+            <h2>📨 Novo Contato via Consultoria</h2>
+            <p><strong>Nome:</strong> ${name}</p>
+            <p><strong>E-mail:</strong> ${email}</p>
+            <p><strong>Telefone:</strong> ${phone}</p>
+            <p><strong>Empresa:</strong> ${company || '-'}</p>
+            <p><strong>Cargo:</strong> ${position || '-'}</p>
+            <p><strong>Segmento:</strong> ${segment || '-'}</p>
+            <p><strong>Mensagem:</strong><br/>${message}</p>
+          </div>
+          <div style="background: #eeeeee; text-align: center; padding: 16px; font-size: 12px;">
+            © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+          </div>
+        </div>
+      </body>
+    `;
+
+        await sendEmail({
+            to: process.env.SMTP_RECEIVER || 'contato@suadominio.com',
+            subject: 'Novo lead via consultoria - WerneTech',
+            html: htmlContent,
+        });
+
+        res.status(201).json({ message: 'Lead salvo e email enviado com sucesso!' });
     } catch (error) {
-        console.error('Erro ao salvar lead:', error);
+        console.error('Erro ao salvar lead ou enviar e-mail:', error);
         res.status(500).json({ error: 'Erro interno do servidor' });
     }
 });
