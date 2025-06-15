@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
             [email, hash, cellphone, company, city, state, false, token]
         );
 
-        const confirmLink = `http://${process.env.EMAIL_IP}/confirm-email?token=${token}`;
+        const confirmLink = `http://5.161.71.249/confirm-email?token=${token}`;
 
         await sendEmail({
             to: email,
@@ -257,12 +257,49 @@ router.post('/forgot-password', async (req, res) => {
             [token, new Date(expires), email]
         );
 
-        const resetLink = `http://${process.env.EMAIL_IP}/reset-password?token=${token}`;
+        const resetLink = `http://5.161.71.249/reset-password?token=${token}`;
 
         await sendEmail({
             to: email,
             subject: 'Redefinição de senha - WerneTech',
-            html: `<p>Para redefinir sua senha, clique no link abaixo:</p><p><a href="${resetLink}">${resetLink}</a></p>`
+            html: `
+                <body style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px;">
+                    <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                        
+                        <!-- Cabeçalho com logo -->
+                        <div style="background: #0d47a1; padding: 20px; text-align: center;">
+                        <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" style="max-height: 120px;" />
+                        </div>
+
+                        <!-- Conteúdo principal -->
+                        <div style="padding: 30px;">
+                        <h2 style="color: #0d47a1;">🔐 Redefinição de Senha</h2>
+                        <p style="font-size: 16px; color: #333333;">
+                            Olá! Recebemos uma solicitação para redefinir sua senha.
+                            <br />
+                            Clique no botão abaixo para criar uma nova senha:
+                        </p>
+
+                        <!-- Botão -->
+                        <div style="text-align: center; margin: 30px 0;">
+                            <a href="${resetLink}" target="_blank" style="background-color: #3B82F6; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; display: inline-block;">
+                            Redefinir Senha
+                            </a>
+                        </div>
+
+                        <p style="font-size: 14px; color: #777777;">
+                            Se você não solicitou essa alteração, pode ignorar este e-mail com segurança.
+                        </p>
+                        </div>
+
+                        <!-- Rodapé -->
+                        <div style="background: #eeeeee; text-align: center; padding: 16px; font-size: 12px;">
+                        © ${new Date().getFullYear()} WerneTech — Todos os direitos reservados.
+                        </div>
+                    </div>
+                    </body>
+
+            `
         });
 
         res.json({ message: 'Email de redefinição enviado com sucesso.' });

@@ -35,6 +35,8 @@ docker-compose down --volumes --remove-orphans
 docker compose exec postgres env | Select-String POSTGRES
 No lugar de "postgres" coloca o nome do serviço e no "POSTGRES", a variavel do enviroment que quer ver
 
+docker compose exec wernetech_backend env | Select-String EMAIL_IP
+
 -Testar conexão manual:
 docker exec -it wernetech_app bash
 

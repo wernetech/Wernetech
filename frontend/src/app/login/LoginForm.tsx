@@ -107,20 +107,11 @@ export default function LoginForm() {
   }
 
   return (
-    <main className="relative h-[90vh] w-full overflow-hidden">
+    <main className="relative min-h-screen w-full overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
       <div className="absolute inset-0 bg-black opacity-60 z-10" />
-
-      <div className="relative z-20 flex flex-col md:flex-row items-center justify-center h-full px-4 py-8 gap-6 md:gap-12">
-        <div className="text-white max-w-xl mb-12 md:mb-0 md:mr-8 md:w-1/2">
-          <h1 className="text-5xl font-bold mb-4">Login</h1>
-          <p className="text-2xl leading-relaxed">
-            Bem-vindo (a)! Realize seu login para acessar os conteúdos
-            exclusivos produzidos pela equipe Wernetech.
-          </p>
-        </div>
-
-        <div className="bg-white bg-opacity-95 backdrop-blur-lg p-8 rounded-xl max-w-md w-full shadow-md">
+      <div className="relative z-20 flex flex-col-reverse md:flex-row items-center justify-center min-h-screen px-4 py-10 gap-10 md:gap-12">
+        <div className="bg-white bg-opacity-95 backdrop-blur-lg p-6 sm:p-8 rounded-xl w-full max-w-sm shadow-md">
           <h2 className="text-xl font-bold text-center text-gray-800 mb-2">
             Acesse sua conta
           </h2>
@@ -191,6 +182,13 @@ export default function LoginForm() {
               </a>
             </p>
           </form>
+        </div>
+        <div className="text-white text-center md:text-left max-w-xl w-full md:w-1/2">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Login</h1>
+          <p className="text-lg md:text-2xl leading-relaxed">
+            Bem-vindo (a)! Realize seu login para acessar os conteúdos
+            exclusivos produzidos pela equipe Wernetech.
+          </p>
         </div>
       </div>
     </main>
