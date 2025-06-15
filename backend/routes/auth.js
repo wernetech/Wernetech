@@ -147,6 +147,41 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Registro de admin
+router.post('/register-admin', async (req, res) => {
+    const { email, password, cellphone, company, city, state } = req.body;
+
+    if (!email || !password || !cellphone || !company || !city || !state) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    }
+
+    try {
+        const hash = await bcrypt.hash(password, 10);
+
+        await db.query(
+            `INSERT INTO users (
+        email, password, cellphone, company, city, state,
+        verified, admin
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+            [
+                email,
+                hash,
+                '31999999999',
+                'Admin Corp',
+                'Contagem',
+                'MG',
+                true,
+                true
+            ]
+        );
+
+        res.status(201).json({ message: 'Usuário administrador criado com sucesso.' });
+    } catch (err) {
+        console.error('Erro ao registrar admin:', err);
+        res.status(500).json({ error: 'Erro ao registrar usuário administrador.' });
+    }
+});
+
 // Confirmar e-mail
 router.get('/confirm-email', async (req, res) => {
     const { token } = req.query;

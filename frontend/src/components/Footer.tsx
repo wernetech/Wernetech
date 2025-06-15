@@ -32,52 +32,8 @@ export default function Footer() {
                 Consultoria
               </Link>
             </li>
-            {/* <li>
-              <Link
-                href="/politica-privacidade"
-                className="hover:text-blue-800 transition"
-              >
-                Política de Privacidade
-              </Link>
-            </li>
-            <li>
-              <Link href="/termos" className="hover:text-blue-800 transition">
-                Termos de uso
-              </Link>
-            </li> */}
           </ul>
         </div>
-
-        {/* Soluções */}
-        {/* <div>
-          <h3 className="text-base font-semibold mb-3">Soluções</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link
-                href="/solucoes/software"
-                className="hover:text-blue-800 transition"
-              >
-                Softwares
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/solucoes/licenciamento"
-                className="hover:text-blue-800 transition"
-              >
-                Licenciamento
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/solucoes/suporte"
-                className="hover:text-blue-800 transition"
-              >
-                Suporte
-              </Link>
-            </li>
-          </ul>
-        </div> */}
 
         {/* Mídias Sociais */}
         <div>
@@ -89,7 +45,7 @@ export default function Footer() {
             <a href="#" aria-label="Instagram" className="hover:text-pink-600">
               <Instagram size={20} />
             </a> */}
-            <a href="https://www.linkedin.com/company/wernetech" aria-label="Linkedin" className="hover:text-blue-700">
+            <a href="https://www.linkedin.com/company/wernetech" target="_blank" aria-label="Linkedin" className="hover:text-blue-700">
               <Linkedin size={20} />
             </a>
             {/* <a href="#" aria-label="YouTube" className="hover:text-red-600">
