@@ -38,6 +38,9 @@ No lugar de "postgres" coloca o nome do serviço e no "POSTGRES", a variavel do 
 -Testar conexão manual:
 docker exec -it wernetech_app bash
 
+-Ver o conteudo do arquivo:
+cat leads.js (nome do arquivo)
+
 -Após testar tente conectar ao banco:
 psql -U wernetech_admin -d empresa (troque as variaveis de acordo com o seu banco)
 
