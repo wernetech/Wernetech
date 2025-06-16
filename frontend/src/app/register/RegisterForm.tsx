@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const router = useRouter();
+  const canvasRef = useRef(null);
 
   const [form, setForm] = useState({
     email: "",
@@ -19,7 +20,12 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const canvasRef = useRef(null);
+  const [passwordStrength, setPasswordStrength] = useState({
+    width: "0%",
+    color: "",
+    text: "",
+    textColor: "",
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -81,6 +87,48 @@ export default function RegisterForm() {
     });
   }, []);
 
+  const checkPasswordStrength = (password) => {
+    let score = 0;
+    if (password.length > 0) score++;
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    let width = "0%",
+      color = "",
+      text = "",
+      textColor = "";
+    switch (score) {
+      case 1:
+      case 2:
+        width = "25%";
+        color = "#ef4444";
+        text = "Senha Fraca";
+        textColor = "#ef4444";
+        break;
+      case 3:
+        width = "50%";
+        color = "#f97316";
+        text = "Senha Média";
+        textColor = "#f97316";
+        break;
+      case 4:
+        width = "75%";
+        color = "#3b82f6";
+        text = "Senha Boa";
+        textColor = "#3b82f6";
+        break;
+      case 5:
+        width = "100%";
+        color = "#22c55e";
+        text = "Senha Forte";
+        textColor = "#22c55e";
+        break;
+    }
+    setPasswordStrength({ width, color, text, textColor });
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
@@ -88,6 +136,7 @@ export default function RegisterForm() {
       setLoading(false);
       return;
     }
+
     setLoading(true);
     setError("");
     setSuccess("");
@@ -110,7 +159,6 @@ export default function RegisterForm() {
       setSuccess("Conta criada com sucesso!");
       setTimeout(() => router.push("/login"), 2000);
     } catch (err) {
-      console.error(err);
       setError("Erro ao conectar com o servidor");
     } finally {
       setLoading(false);
@@ -122,64 +170,96 @@ export default function RegisterForm() {
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
       <div className="absolute inset-0 bg-black opacity-60 z-10" />
 
-      <div className="relative z-20 flex flex-col-reverse md:flex-row items-center justify-center min-h-screen px-4 py-10 gap-10 md:gap-12">
-        {/* Formulário */}
-        <div className="bg-white bg-opacity-95 backdrop-blur-lg p-6 sm:p-8 rounded-xl w-full max-w-xl shadow-md">
-          <h2 className="text-xl font-bold text-center text-gray-800 mb-2">
-            Criar conta
-          </h2>
-          <p className="text-sm text-gray-600 text-center mb-6">
-            Registre-se com seu e-mail
+      <div className="relative z-20 flex flex-col lg:flex-row items-center justify-center min-h-screen px-4 py-10 gap-10 lg:gap-20">
+        {/* Texto lateral */}
+        <div className="text-white text-center lg:text-left max-w-xl w-full lg:w-1/2">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+            Crie sua Conta
+          </h1>
+          <p className="text-lg lg:text-xl leading-relaxed">
+            Preencha o formulário para ter acesso imediato aos nossos conteúdos
+            e insights de tecnologia.
           </p>
+        </div>
+
+        {/* Formulário */}
+        <div className="w-full max-w-md bg-white rounded-lg shadow-xl z-20">
+          <div className="p-6 sm:p-8 text-center border-b border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-800">Criar conta</h2>
+            <p className="text-sm text-gray-500 mt-1">
+              Registre-se com seu e-mail
+            </p>
+          </div>
 
           <form
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black"
+            className="p-6 sm:p-8 space-y-4 text-black"
             onSubmit={handleSubmit}
           >
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Nome Completo
+              </label>
+              <input
+                type="text"
+                className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+                placeholder="Seu nome completo"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
                 E-mail
               </label>
               <input
                 type="email"
-                autoComplete="email"
                 required
+                className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
                 placeholder="Digite seu e-mail"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 value={form.email}
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, email: e.target.value }))
                 }
               />
             </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
                 Senha
               </label>
               <input
                 type="password"
-                autoComplete="new-password"
                 required
+                className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
                 placeholder="Crie uma senha forte"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 value={form.password}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, password: e.target.value }))
-                }
+                onChange={(e) => {
+                  setForm((prev) => ({ ...prev, password: e.target.value }));
+                  checkPasswordStrength(e.target.value);
+                }}
               />
+              <div className="mt-2 h-1.5 rounded-full bg-gray-200">
+                <div
+                  style={{
+                    width: passwordStrength.width,
+                    backgroundColor: passwordStrength.color,
+                  }}
+                  className="h-1.5 rounded-full transition-all duration-300"
+                />
+              </div>
+              <p
+                className="text-xs mt-1"
+                style={{ color: passwordStrength.textColor }}
+              >
+                {passwordStrength.text}
+              </p>
             </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-600 mb-1">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
                 Confirmar Senha
               </label>
               <input
                 type="password"
-                autoComplete="new-password"
                 required
+                className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
                 placeholder="Repita a senha"
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
                 value={form.confirmPassword}
                 onChange={(e) =>
                   setForm((prev) => ({
@@ -189,109 +269,156 @@ export default function RegisterForm() {
                 }
               />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Telefone
-              </label>
-              <input
-                type="tel"
-                autoComplete="tel"
-                placeholder="(31) 91234-5678"
-                required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
-                value={form.cellphone}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, cellphone: e.target.value }))
-                }
-              />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-1/2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Telefone
+                </label>
+                <input
+                  type="tel"
+                  required
+                  className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+                  placeholder="(XX) XXXXX-XXXX"
+                  value={form.cellphone}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, cellphone: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="w-full sm:w-1/2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Empresa
+                </label>
+                <input
+                  type="text"
+                  required
+                  className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+                  placeholder="Nome da empresa"
+                  value={form.company}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, company: e.target.value }))
+                  }
+                />
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-1/2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Cidade
+                </label>
+                <input
+                  type="text"
+                  required
+                  className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
+                  placeholder="Sua cidade"
+                  value={form.city}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, city: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="w-full sm:w-1/2">
+                <label className="block text-sm font-medium text-gray-700">
+                  UF
+                </label>
+                <select
+                  required
+                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md"
+                  value={form.state}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, state: e.target.value }))
+                  }
+                >
+                  <option value="">UF</option>
+                  {[
+                    "AC",
+                    "AL",
+                    "AP",
+                    "AM",
+                    "BA",
+                    "CE",
+                    "DF",
+                    "ES",
+                    "GO",
+                    "MA",
+                    "MT",
+                    "MS",
+                    "MG",
+                    "PA",
+                    "PB",
+                    "PR",
+                    "PE",
+                    "PI",
+                    "RJ",
+                    "RN",
+                    "RS",
+                    "RO",
+                    "RR",
+                    "SC",
+                    "SP",
+                    "SE",
+                    "TO",
+                  ].map((uf) => (
+                    <option key={uf} value={uf}>
+                      {uf}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Empresa
-              </label>
+            <div className="flex items-center pt-2">
               <input
-                type="text"
-                autoComplete="organization"
-                placeholder="Nome da empresa"
+                id="terms"
+                type="checkbox"
                 required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
-                value={form.company}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, company: e.target.value }))
-                }
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Cidade
+              <label
+                htmlFor="terms"
+                className="ml-2 block text-sm text-gray-600"
+              >
+                Eu li e aceito os{" "}
+                <a
+                  href="https://drive.google.com/file/d/1zd4nLdHgXGi5GFA4W-aNbwO9_fANGeSX/view"
+                  target="_blank"
+                  className="font-medium text-blue-600 hover:text-blue-500"
+                  rel="noopener noreferrer"
+                >
+                  Termos de Serviço
+                </a>
               </label>
-              <input
-                type="text"
-                autoComplete="address-level2"
-                placeholder="Ex: Contagem"
-                required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none"
-                value={form.city}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, city: e.target.value }))
-                }
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                UF
-              </label>
-              <input
-                type="text"
-                maxLength={2}
-                autoComplete="address-level1"
-                placeholder="MG"
-                required
-                className="w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-600 focus:outline-none uppercase"
-                value={form.state}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    state: e.target.value.toUpperCase(),
-                  }))
-                }
-              />
             </div>
 
             {error && (
-              <div className="md:col-span-2 text-red-600 text-sm text-center">
-                {error}
-              </div>
+              <p className="text-sm text-red-600 text-center">{error}</p>
             )}
             {success && (
-              <div className="md:col-span-2 text-green-600 text-sm text-center">
-                {success}
-              </div>
+              <p className="text-sm text-green-600 text-center">{success}</p>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="md:col-span-2 w-full bg-blue-700 hover:bg-blue-800 text-white py-2 rounded-md font-semibold transition"
-            >
-              {loading ? "Registrando..." : "Criar minha conta"}
-            </button>
-          </form>
-        </div>
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700"
+              >
+                {loading ? "Registrando..." : "Criar minha conta"}
+              </button>
+            </div>
 
-        {/* Texto lateral */}
-        <div className="text-white text-center md:text-left max-w-xl w-full md:w-1/2">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Crie sua Conta
-          </h1>
-          <p className="text-lg md:text-xl leading-relaxed">
-            Preencha o formulário para ter acesso imediato aos nossos conteúdos
-            e insights de tecnologia.
-          </p>
+            <div className="text-center mt-6">
+              <p className="text-sm text-gray-600">
+                Já possui uma conta?{" "}
+                <a
+                  href="/login"
+                  className="font-medium text-blue-600 hover:text-blue-500"
+                >
+                  Faça login
+                </a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </main>

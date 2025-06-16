@@ -31,6 +31,10 @@ docker system prune -af
 -Remover tudo antigo:
 docker-compose down --volumes --remove-orphans
 
+-Derrubar todos os dockers:
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
 -Ver as variaveis de ambiente do docker:
 docker compose exec postgres env | Select-String POSTGRES
 No lugar de "postgres" coloca o nome do serviço e no "POSTGRES", a variavel do enviroment que quer ver
