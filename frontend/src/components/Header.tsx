@@ -64,6 +64,8 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isAuthenticated, user, checkAuth, logout } = useAuth();
   const pathname = usePathname();
+  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
+  let hoverTimeout: NodeJS.Timeout;
 
   const handleLogout = async () => {
     await logout();
@@ -129,7 +131,19 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-6 text-gray-700">
           {navLinks.map((link, i) =>
             link.groupedDropdown ? (
-              <div key={i} className="relative group">
+              <div
+                key={i}
+                className="relative"
+                onMouseEnter={() => {
+                  clearTimeout(hoverTimeout);
+                  setIsSolutionsOpen(true);
+                }}
+                onMouseLeave={() => {
+                  hoverTimeout = setTimeout(() => {
+                    setIsSolutionsOpen(false);
+                  }, 150);
+                }}
+              >
                 <button className="flex items-center gap-1 hover:text-blue-800 transition-colors">
                   <span>{link.label}</span>
                   <svg
@@ -146,35 +160,38 @@ export default function Header() {
                     />
                   </svg>
                 </button>
-                <div className="absolute left-0 mt-2 w-max max-w-6xl bg-white shadow-lg rounded-md p-6 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-300 z-50">
-                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-6">
-                    {link.groupedDropdown.map((group, gi) => (
-                      <div key={gi} className="space-y-4">
-                        {group.title && (
-                          <h3 className="font-bold text-sm uppercase text-gray-400">
-                            {group.title}
-                          </h3>
-                        )}
-                        <ul className="space-y-2">
-                          {group.items.map((item, ii) => (
-                            <li key={ii}>
-                              <Link
-                                href={item.href}
-                                className={`block ${
-                                  item.label.includes("Ver")
-                                    ? "text-blue-600 font-semibold hover:underline"
-                                    : "text-gray-700 hover:text-blue-600"
-                                }`}
-                              >
-                                {item.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+
+                {isSolutionsOpen && (
+                  <div className="absolute left-0 mt-2 w-max max-w-6xl bg-white shadow-lg rounded-md p-6 z-50 transition-opacity duration-200">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-6">
+                      {link.groupedDropdown.map((group, gi) => (
+                        <div key={gi} className="space-y-4">
+                          {group.title && (
+                            <h3 className="font-bold text-sm uppercase text-gray-400">
+                              {group.title}
+                            </h3>
+                          )}
+                          <ul className="space-y-2">
+                            {group.items.map((item, ii) => (
+                              <li key={ii}>
+                                <Link
+                                  href={item.href}
+                                  className={`block ${
+                                    item.label.includes("Ver")
+                                      ? "text-blue-600 font-semibold hover:underline"
+                                      : "text-gray-700 hover:text-blue-600"
+                                  }`}
+                                >
+                                  {item.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ) : (
               <Link
