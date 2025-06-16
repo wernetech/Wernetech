@@ -7,7 +7,7 @@ export default function BlogClient() {
   const [filters, setFilters] = useState({ category: "", author: "" });
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 9;
+  const postsPerPage = 6;
 
   useEffect(() => {
     fetchPosts();
@@ -17,7 +17,7 @@ export default function BlogClient() {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/post?category=${filters.category}&author=${filters.author}&page=${currentPage}`
+        `/api/post?category=${filters.category}&author=${filters.author}&page=${currentPage}&limit=${postsPerPage}`
       );
       const data = await res.json();
       setPosts(data);
@@ -41,30 +41,11 @@ export default function BlogClient() {
           Blog
         </h1>
 
+        {/* Filtros ocultos no momento
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-          <select
-            name="category"
-            onChange={handleFilterChange}
-            className="border rounded-md px-4 py-2 text-black"
-            defaultValue=""
-          >
-            <option value="">Todas as Categorias</option>
-            <option value="infra">Infraestrutura</option>
-            <option value="seguranca">Segurança</option>
-            <option value="gestao">Gestão</option>
-          </select>
-
-          <select
-            name="author"
-            onChange={handleFilterChange}
-            className="border rounded-md px-4 py-2 text-black"
-            defaultValue=""
-          >
-            <option value="">Todos os Autores</option>
-            <option value="Joao">João</option>
-            <option value="Maria">Maria</option>
-          </select>
-        </div>
+          <select ... />
+          <select ... />
+        </div> */}
 
         {loading ? (
           <p className="text-center text-gray-500">Carregando posts...</p>
@@ -105,6 +86,7 @@ export default function BlogClient() {
           </div>
         )}
 
+        {/* Paginação */}
         <div className="flex justify-center mt-10 gap-2">
           {currentPage > 1 && (
             <button

@@ -44,14 +44,42 @@ router.post('/', verifyAuth, async (req, res) => {
 
 // Rota para listar todos os leads
 router.get('/', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const offset = (page - 1) * limit;
+
+    const { category, author } = req.query;
+    const filters = [];
+    const values = [];
+
+    let baseQuery = `SELECT * FROM posts`;
+    let whereClause = '';
+
+    if (category) {
+        values.push(category);
+        filters.push(`category = $${values.length}`);
+    }
+
+    if (author) {
+        values.push(author);
+        filters.push(`author = $${values.length}`);
+    }
+
+    if (filters.length > 0) {
+        whereClause = ` WHERE ${filters.join(' AND ')}`;
+    }
+
+    const finalQuery = `${baseQuery}${whereClause} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+
     try {
-        const result = await db.query(`SELECT * FROM posts`);
+        const result = await db.query(finalQuery, values);
         res.status(200).json(result.rows);
     } catch (error) {
-        console.error('Erro ao buscar posts:', error);
+        console.error('Erro ao buscar posts paginados:', error);
         res.status(500).json({ error: 'Erro interno do servidor' });
     }
 });
+
 
 router.get('/:slug', async (req, res) => {
     const { slug } = req.params;

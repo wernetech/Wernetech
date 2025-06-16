@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { type SlugPageProps } from "../../../types/pages"; // caminho pode variar dependendo do seu tsconfig
+import { type SlugPageProps } from "../../../types/pages";
 
 async function getPost(slug: string) {
   const res = await fetch(`/api/post/${slug}`, {
-    next: { revalidate: 60 }, // opcional: ISR
+    next: { revalidate: 60 },
   });
 
   if (!res.ok) return null;

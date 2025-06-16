@@ -17,5 +17,3 @@ export type TagPageProps = {
     tag: string;
   };
 };
-
-// Pode expandir conforme necessidade

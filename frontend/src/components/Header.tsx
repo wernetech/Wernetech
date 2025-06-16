@@ -56,7 +56,7 @@ const navLinks = [
   { href: "/consultoria", label: "Consultoria" },
   { href: "/clientes", label: "Nossos Clientes" },
   { href: "/blog", label: "Blog" },
-  { href: "/", label: "Contato" },
+  { href: "/contato", label: "Contato" },
 ];
 
 export default function Header() {

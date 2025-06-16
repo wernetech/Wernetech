@@ -543,6 +543,129 @@ router.post("/send3", async (req, res) => {
     }
 });
 
+router.post("/send5", async (req, res) => {
+    const { name, email, contact_reason, message } = req.body;
+
+    if (!name || !email || !contact_reason || !message) {
+        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+    }
+
+    try {
+        await sendEmail({
+            to: process.env.SMTP_USER,
+            subject: "📩 Novo Contato via Página de Contato",
+            html: `
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <title>Nova Mensagem de Contato</title>
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              font-family: 'Poppins', Arial, sans-serif;
+              background-color: #f8f9fa;
+              color: #212529;
+            }
+            .wrapper {
+              width: 100%;
+              padding: 40px 0;
+              background-color: #f8f9fa;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .main {
+              width: 100%;
+              max-width: 600px;
+              background-color: #ffffff;
+              border-radius: 12px;
+              overflow: hidden;
+              border: 1px solid #dee2e6;
+              box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            }
+            .header {
+              background-color: #3B82F6;
+              padding: 30px;
+              text-align: center;
+              color: #fff;
+            }
+            .header img {
+              max-height: 50px;
+            }
+            .content {
+              padding: 30px 40px;
+            }
+            .content h2 {
+              font-size: 22px;
+              color: #3B82F6;
+              margin-top: 0;
+              margin-bottom: 20px;
+            }
+            .content p {
+              font-size: 16px;
+              line-height: 1.6;
+              color: #495057;
+            }
+            .info td {
+              padding: 8px 0;
+              border-bottom: 1px solid #e9ecef;
+            }
+            .info strong {
+              display: inline-block;
+              width: 130px;
+              color: #212529;
+            }
+            .footer {
+              background-color: #e5e7eb;
+              color: #777;
+              text-align: center;
+              font-size: 12px;
+              padding: 16px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="wrapper">
+            <table class="main">
+              <tr class="header">
+                <td>
+                  <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" />
+                </td>
+              </tr>
+              <tr>
+                <td class="content">
+                  <h2>📨 Novo Contato Recebido</h2>
+                  <table class="info">
+                    <tr><td><strong>Nome:</strong> ${name}</td></tr>
+                    <tr><td><strong>E-mail:</strong> ${email}</td></tr>
+                    <tr><td><strong>Motivo:</strong> ${contact_reason}</td></tr>
+                    <tr><td><strong>Mensagem:</strong><br/>${message}</td></tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="footer">
+                  © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                </td>
+              </tr>
+            </table>
+          </div>
+        </body>
+        </html>
+      `,
+        });
+
+        res.status(200).json({ success: true, message: "Mensagem enviada com sucesso!" });
+    } catch (err) {
+        console.error("Erro ao enviar contato:", err);
+        res.status(500).json({ error: "Falha ao enviar o e-mail." });
+    }
+});
+
+
 
 
 export default router;

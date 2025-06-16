@@ -93,3 +93,17 @@ sudo systemctl status nginx
 
 -Reiniciar o serviço NGINX:
 sudo systemctl restart nginx
+
+
+
+-criar admin provisorio dentro do container app:
+curl -X POST http://localhost:4000/api/auth/register-admin \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "admin@admin.com",
+    "password": "admin123#",
+    "cellphone": "31999999999",
+    "company": "Admin Corp",
+    "city": "Contagem",
+    "state": "MG"
+  }'
