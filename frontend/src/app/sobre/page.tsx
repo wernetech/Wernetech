@@ -61,7 +61,7 @@ export default function SobrePage() {
           </div>
           <img
             src="/sobre.png"
-            alt="Equipe de tecnologia WerneTech"
+            alt="Equipe de tecnologia Wernetech"
             className="rounded-lg shadow-md"
           />
         </div>
@@ -101,7 +101,7 @@ export default function SobrePage() {
           </p>
           <img
             src="/mapa-brasil.png"
-            alt="Mapa de atuação WerneTech"
+            alt="Mapa de atuação Wernetech"
             className="mx-auto max-w-md"
           />
         </div>

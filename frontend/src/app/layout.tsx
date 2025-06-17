@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import Script from "next/script";
 import { AuthProvider } from "../context/AuthContext";
 import CookieConsent from "@/components/CookieConsent";
+import LogoutModal from "@/components/LogoutModal";
 
 export const metadata = {
   title: "Wernetech - Impulsionando o Futuro com Soluções de TI Inteligentes",
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <Header />
+          <LogoutModal />
           {children}
           <Footer />
           <CookieConsent />

@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
       <body style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px;">
         <div style="max-width: 600px; margin: 0 auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
           <div style="background: #0d47a1; padding: 20px; text-align: center;">
-            <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" style="max-height: 120px;" />
+            <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo Wernetech" style="max-height: 120px;" />
           </div>
           <div style="padding: 30px;">
             <h2>📨 Novo Contato via Consultoria</h2>
@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
             <p><strong>Mensagem:</strong><br/>${message}</p>
           </div>
           <div style="background: #eeeeee; text-align: center; padding: 16px; font-size: 12px;">
-            © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+            © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
           </div>
         </div>
       </body>
@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
 
     await sendEmail({
       to: process.env.SMTP_RECEIVER || 'contato@suadominio.com',
-      subject: 'Novo lead via consultoria - WerneTech',
+      subject: 'Novo lead via consultoria - Wernetech',
       html: htmlContent,
     });
 

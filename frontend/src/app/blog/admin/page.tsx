@@ -25,9 +25,11 @@ export default function AdminPostForm() {
   useEffect(() => {
     async function checkAuth() {
       try {
-        const res = await fetch(`/api/auth/me`, {
+        const res = await fetch("/api/auth/me", {
+          method: "GET",
           credentials: "include",
         });
+
         if (!res.ok) {
           router.push("/login");
         } else {

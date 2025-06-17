@@ -30,7 +30,7 @@ router.post('/register', async (req, res) => {
 
         await sendEmail({
             to: email,
-            subject: 'Confirmação de e-mail - WerneTech',
+            subject: 'Confirmação de e-mail - Wernetech',
             html: `
                 <!DOCTYPE html>
                 <html lang="pt-BR">
@@ -113,14 +113,14 @@ router.post('/register', async (req, res) => {
                         <table class="main">
                             <tr class="header">
                             <td>
-                                <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" />
+                                <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo Wernetech" />
                             </td>
                             </tr>
                             <tr>
                             <td class="content">
                                 <h2>Confirmação de E-mail</h2>
                                 <p>Olá,</p>
-                                <p>Obrigado por se registrar na <strong>WerneTech</strong>.</p>
+                                <p>Obrigado por se registrar na <strong>Wernetech</strong>.</p>
                                 <p>Para ativar sua conta, clique no botão abaixo:</p>
                                 <p>
                                 <a href="${confirmLink}" class="button">Ativar Conta</a>
@@ -130,7 +130,7 @@ router.post('/register', async (req, res) => {
                             </tr>
                             <tr>
                             <td class="footer">
-                                © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                                © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
                             </td>
                             </tr>
                         </table>
@@ -144,41 +144,6 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         console.error('Erro no registro:', err);
         res.status(500).json({ error: 'Erro ao registrar usuário.' });
-    }
-});
-
-// Registro de admin
-router.post('/register-admin', async (req, res) => {
-    const { email, password, cellphone, company, city, state } = req.body;
-
-    if (!email || !password || !cellphone || !company || !city || !state) {
-        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
-    }
-
-    try {
-        const hash = await bcrypt.hash(password, 10);
-
-        await db.query(
-            `INSERT INTO users (
-        email, password, cellphone, company, city, state,
-        verified, admin
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-            [
-                email,
-                hash,
-                '31999999999',
-                'Admin Corp',
-                'Contagem',
-                'MG',
-                true,
-                true
-            ]
-        );
-
-        res.status(201).json({ message: 'Usuário administrador criado com sucesso.' });
-    } catch (err) {
-        console.error('Erro ao registrar admin:', err);
-        res.status(500).json({ error: 'Erro ao registrar usuário administrador.' });
     }
 });
 
@@ -245,8 +210,7 @@ router.post('/login', async (req, res) => {
             .status(200)
             .json({
                 message: 'Login bem-sucedido.',
-                user: { id: user.id, email: user.email },
-                admin: user.admin,
+                user: { id: user.id, email: user.email, admin: user.admin },
             });
     } catch (err) {
         console.error('Erro no login:', err);
@@ -296,14 +260,14 @@ router.post('/forgot-password', async (req, res) => {
 
         await sendEmail({
             to: email,
-            subject: 'Redefinição de senha - WerneTech',
+            subject: 'Redefinição de senha - Wernetech',
             html: `
                 <body style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px;">
                     <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
                         
                         <!-- Cabeçalho com logo -->
                         <div style="background: #0d47a1; padding: 20px; text-align: center;">
-                        <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" style="max-height: 120px;" />
+                        <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo Wernetech" style="max-height: 120px;" />
                         </div>
 
                         <!-- Conteúdo principal -->
@@ -329,7 +293,7 @@ router.post('/forgot-password', async (req, res) => {
 
                         <!-- Rodapé -->
                         <div style="background: #eeeeee; text-align: center; padding: 16px; font-size: 12px;">
-                        © ${new Date().getFullYear()} WerneTech — Todos os direitos reservados.
+                        © ${new Date().getFullYear()} Wernetech — Todos os direitos reservados.
                         </div>
                     </div>
                     </body>

@@ -109,7 +109,7 @@ router.post("/send", async (req, res) => {
                         <table class="main">
                         <tr class="header">
                             <td style="text-align: center;">
-                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Wernetech Logo" style="max-width: 200px; height: auto;" />
                             </td>
                         </tr>
                         <tr>
@@ -128,7 +128,7 @@ router.post("/send", async (req, res) => {
                         </tr>
                         <tr>
                             <td class="footer">
-                            © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                            © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
                             </td>
                         </tr>
                         </table>
@@ -244,7 +244,7 @@ router.post("/send2", async (req, res) => {
                     <table class="main">
                     <tr class="header">
                         <td style="text-align: center;">
-                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Wernetech Logo" style="max-width: 200px; height: auto;" />
                         </td>
                     </tr>
                     <tr>
@@ -262,7 +262,7 @@ router.post("/send2", async (req, res) => {
                     </tr>
                     <tr>
                         <td class="footer">
-                        © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                        © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
                         </td>
                     </tr>
                     </table>
@@ -376,7 +376,7 @@ router.post("/send4", async (req, res) => {
                     <table class="main">
                     <tr class="header">
                         <td style="text-align: center;">
-                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Wernetech Logo" style="max-width: 200px; height: auto;" />
                             </td>
                     </tr>
                     <tr>
@@ -395,7 +395,7 @@ router.post("/send4", async (req, res) => {
                     </tr>
                     <tr>
                         <td class="footer">
-                        © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                        © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
                         </td>
                     </tr>
                     </table>
@@ -509,7 +509,7 @@ router.post("/send3", async (req, res) => {
                     <table class="main">
                     <tr class="header">
                         <td style="text-align: center;">
-                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="WerneTech Logo" style="max-width: 200px; height: auto;" />
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Wernetech Logo" style="max-width: 200px; height: auto;" />
                             </td>
                     </tr>
                     <tr>
@@ -526,7 +526,7 @@ router.post("/send3", async (req, res) => {
                     </tr>
                     <tr>
                         <td class="footer">
-                        © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                        © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
                         </td>
                     </tr>
                     </table>
@@ -632,7 +632,7 @@ router.post("/send5", async (req, res) => {
             <table class="main">
               <tr class="header">
                 <td>
-                  <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo WerneTech" />
+                  <img src="https://drive.google.com/uc?export=view&id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Logo Wernetech" />
                 </td>
               </tr>
               <tr>
@@ -648,7 +648,7 @@ router.post("/send5", async (req, res) => {
               </tr>
               <tr>
                 <td class="footer">
-                  © ${new Date().getFullYear()} WerneTech - Todos os direitos reservados.
+                  © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
                 </td>
               </tr>
             </table>

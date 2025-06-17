@@ -156,8 +156,10 @@ export default function RegisterForm() {
         return;
       }
 
-      setSuccess("Conta criada com sucesso!");
-      setTimeout(() => router.push("/login"), 2000);
+      setSuccess(
+        "Verifique seu e-mail para confirmar o cadastro antes de fazer login."
+      );
+      setTimeout(() => router.push("/login"), 5000);
     } catch (err) {
       setError("Erro ao conectar com o servidor");
     } finally {
@@ -394,7 +396,9 @@ export default function RegisterForm() {
               <p className="text-sm text-red-600 text-center">{error}</p>
             )}
             {success && (
-              <p className="text-sm text-green-600 text-center">{success}</p>
+              <div className="text-sm text-green-700 bg-green-100 border border-green-300 rounded-md p-2 text-center">
+                {success}
+              </div>
             )}
 
             <div className="pt-2">

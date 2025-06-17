@@ -15,6 +15,8 @@ type AuthContextType = {
   setUser: (user: UserType | null) => void;
   checkAuth: () => Promise<void>;
   logout: () => Promise<void>;
+  confirmLogout: boolean;
+  setConfirmLogout: (value: boolean) => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -24,15 +26,19 @@ const AuthContext = createContext<AuthContextType>({
   setUser: () => {},
   checkAuth: async () => {},
   logout: async () => {},
+  confirmLogout: false,
+  setConfirmLogout: () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserType | null>(null);
+  const [confirmLogout, setConfirmLogout] = useState(false);
 
   const checkAuth = async () => {
     try {
-      const res = await fetch(`/api/auth/me`, {
+      const res = await fetch("/api/auth/me", {
+        method: "GET",
         credentials: "include",
       });
 
@@ -73,6 +79,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser,
         checkAuth,
         logout,
+        confirmLogout,
+        setConfirmLogout,
       }}
     >
       {children}

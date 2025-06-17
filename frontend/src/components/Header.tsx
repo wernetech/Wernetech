@@ -60,18 +60,12 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { isAuthenticated, user, checkAuth, logout } = useAuth();
+  const { isAuthenticated, user, setConfirmLogout } = useAuth();
   const pathname = usePathname();
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
-  let hoverTimeout: NodeJS.Timeout;
 
-  const handleLogout = async () => {
-    await logout();
-    await checkAuth();
-    router.push("/");
-  };
+  let hoverTimeout: NodeJS.Timeout;
 
   const renderAuthButtons = () => {
     if (isAuthenticated === null) return null;
@@ -96,7 +90,7 @@ export default function Header() {
           ))}
 
         <button
-          onClick={handleLogout}
+          onClick={() => setConfirmLogout(true)}
           className="ml-2 inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md shadow hover:bg-red-700 transition"
         >
           <LogOut size={16} />
@@ -120,7 +114,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo/Wernetech-02.png"
-            alt="WerneTech Logo"
+            alt="Wernetech Logo"
             width={200}
             height={40}
             className="max-h-[5rem] w-auto object-contain"

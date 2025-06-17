@@ -1,4 +1,5 @@
 import { db } from './db.js';
+import bcrypt from 'bcrypt';
 
 export async function createUsersTable() {
   try {
@@ -22,7 +23,34 @@ export async function createUsersTable() {
     `);
 
     console.log('Tabela "users" verificada/criada com sucesso!');
+
+    // Verifica se já existe um admin
+    const existingAdmin = await db.query(
+      `SELECT * FROM users WHERE email = $1`,
+      ['admin@wernetech.com']
+    );
+
+    if (existingAdmin.rows.length === 0) {
+      const hashedPassword = await bcrypt.hash('admin123#', 10);
+      await db.query(
+        `INSERT INTO users (email, password, cellphone, company, city, state, verified, admin)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [
+          'admin@wernetech.com',
+          hashedPassword,
+          '(31) 99999-9999',
+          'WerneTech',
+          'Contagem',
+          'MG',
+          true,
+          true,
+        ]
+      );
+      console.log('Usuário admin criado com sucesso!');
+    } else {
+      console.log('Usuário admin já existe.');
+    }
   } catch (error) {
-    console.error('Erro ao criar tabela users:', error);
+    console.error('Erro ao criar tabela ou admin:', error);
   }
 }
