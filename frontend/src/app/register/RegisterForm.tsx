@@ -10,6 +10,7 @@ export default function RegisterForm() {
   const [form, setForm] = useState({
     email: "",
     password: "",
+    name: "",
     confirmPassword: "",
     cellphone: "",
     company: "",
@@ -205,6 +206,10 @@ export default function RegisterForm() {
                 type="text"
                 className="mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md"
                 placeholder="Seu nome completo"
+                value={form.name}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, name: e.target.value }))
+                }
               />
             </div>
             <div>

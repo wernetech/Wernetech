@@ -48,9 +48,10 @@ export default async function PostPage({ params }: SlugPageProps) {
       </p>
 
       {/* Conteúdo */}
-      <article className="prose prose-lg max-w-none text-gray-800 leading-relaxed">
-        {post.content}
-      </article>
+      <article
+        className="prose prose-lg max-w-none text-gray-800 leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: post.html_content }}
+      />
     </main>
   );
 }

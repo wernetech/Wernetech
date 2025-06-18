@@ -1,27 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AdminPostForm() {
+interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  category: string;
+  created_at: string;
+}
+
+export default function ManagePosts() {
   const router = useRouter();
-
-  const [form, setForm] = useState({
-    title: "",
-    slug: "",
-    summary: "",
-    content: "",
-    author: "",
-    category: "",
-    reading_time: "",
-    thumbnail: "",
-  });
-
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // Verifica autenticação no carregamento
   useEffect(() => {
     async function checkAuth() {
       try {
@@ -42,47 +37,42 @@ export default function AdminPostForm() {
     checkAuth();
   }, [router]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
+  useEffect(() => {
+    if (!authChecked) return;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setSuccess(false);
+    async function fetchPosts() {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/post", { credentials: "include" });
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Erro ao carregar posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPosts();
+  }, [authChecked]);
+
+  const handleDelete = async (slug: string) => {
+    const confirm = window.confirm("Tem certeza que deseja excluir este post?");
+    if (!confirm) return;
+
     try {
-      const res = await fetch(`/api/post`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch(`/api/post/${slug}`, {
+        method: "DELETE",
         credentials: "include",
-        body: JSON.stringify({
-          ...form,
-          reading_time: Number(form.reading_time),
-        }),
       });
 
       if (res.ok) {
-        setSuccess(true);
-        setForm({
-          title: "",
-          slug: "",
-          summary: "",
-          content: "",
-          author: "",
-          category: "",
-          reading_time: "",
-          thumbnail: "",
-        });
+        setPosts((prev) => prev.filter((p) => p.slug !== slug));
       } else {
-        console.error("Erro ao criar post:", await res.text());
+        console.error("Erro ao excluir post:", await res.text());
       }
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error("Erro na exclusão:", err);
     }
   };
 
@@ -90,63 +80,56 @@ export default function AdminPostForm() {
 
   return (
     <main className="min-h-screen bg-gray-100 px-4 py-12 text-black">
-      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
-        <h1 className="text-2xl font-bold text-blue-700 mb-6">
-          Criar Novo Post
-        </h1>
-
-        {success && (
-          <p className="text-green-600 mb-4">Post criado com sucesso!</p>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {[
-            "title",
-            "slug",
-            "author",
-            "category",
-            "reading_time",
-            "thumbnail",
-          ].map((field) => (
-            <input
-              key={field}
-              type={field === "reading_time" ? "number" : "text"}
-              name={field}
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              value={(form as any)[field]}
-              onChange={handleChange}
-              className="w-full border rounded px-4 py-2 text-black"
-              required
-            />
-          ))}
-
-          <textarea
-            name="summary"
-            placeholder="Resumo"
-            value={form.summary}
-            onChange={handleChange}
-            className="w-full border rounded px-4 py-2 h-20 text-black"
-            required
-          />
-
-          <textarea
-            name="content"
-            placeholder="Conteúdo"
-            value={form.content}
-            onChange={handleChange}
-            className="w-full border rounded px-4 py-2 h-40 text-black"
-            required
-          />
-
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-blue-700">Gerenciar Posts</h1>
           <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition"
+            onClick={() => router.push("/blog/create")}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
           >
-            {loading ? "Salvando..." : "Criar Post"}
+            Criar Novo Post
           </button>
-        </form>
+        </div>
+
+        {loading ? (
+          <p>Carregando posts...</p>
+        ) : (
+          <table className="w-full text-left border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200 text-sm text-gray-700">
+                <th className="p-3">TÍTULO</th>
+                <th className="p-3">CATEGORIA</th>
+                <th className="p-3">DATA</th>
+                <th className="p-3 text-right">AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              {posts.map((post) => (
+                <tr key={post.id} className="border-t border-gray-300">
+                  <td className="p-3 font-medium">{post.title}</td>
+                  <td className="p-3 text-sm text-gray-600">{post.category}</td>
+                  <td className="p-3 text-sm text-gray-500">
+                    {new Date(post.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="p-3 text-right space-x-4">
+                    <button
+                      onClick={() => router.push(`/blog/edit/${post.slug}`)}
+                      className="text-blue-600 hover:underline text-sm"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDelete(post.slug)}
+                      className="text-red-600 hover:underline text-sm"
+                    >
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </main>
   );

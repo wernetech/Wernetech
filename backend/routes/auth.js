@@ -10,20 +10,21 @@ const router = express.Router();
 
 // Registro
 router.post('/register', async (req, res) => {
-    const { email, password, cellphone, company, city, state } = req.body;
+    const { email, password, name, cellphone, company, city, state } = req.body;
 
-    if (!email || !password || !cellphone || !company || !city || !state) {
+    if (!email || !password || !name || !cellphone || !company || !city || !state) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
     try {
         const hash = await bcrypt.hash(password, 10);
         const token = randomBytes(32).toString('hex');
+        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
         await db.query(
-            `INSERT INTO users (email, password, cellphone, company, city, state, verified, verification_token)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-            [email, hash, cellphone, company, city, state, false, token]
+            `INSERT INTO users (email, password, name, cellphone, company, city, state, verified, verification_token, reset_token_expires)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, false, $8, $9)`,
+            [email, hash, name, cellphone, company, city, state, token, expiresAt]
         );
 
         const confirmLink = `http://5.161.71.249/confirm-email?token=${token}`;
@@ -155,7 +156,10 @@ router.get('/confirm-email', async (req, res) => {
 
     try {
         const result = await db.query(
-            'UPDATE users SET verified = true, verification_token = NULL WHERE verification_token = $1 RETURNING id',
+            `UPDATE users
+             SET verified = true, verification_token = NULL
+             WHERE verification_token = $1
+             RETURNING id`,
             [token]
         );
 
@@ -188,7 +192,6 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Senha incorreta.' });
         }
 
-        // ⚠️ Novo bloqueio
         if (!user.verified) {
             return res.status(403).json({ error: 'Confirme seu e-mail antes de fazer login.' });
         }
@@ -210,7 +213,7 @@ router.post('/login', async (req, res) => {
             .status(200)
             .json({
                 message: 'Login bem-sucedido.',
-                user: { id: user.id, email: user.email, admin: user.admin },
+                user: { id: user.id, email: user.email, admin: user.admin, name: user.name },
             });
     } catch (err) {
         console.error('Erro no login:', err);
@@ -218,10 +221,19 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
 // Verificar sessão
-router.get('/me', verifyAuth, (req, res) => {
-    res.status(200).json({ user: req.user });
+router.get("/me", verifyAuth, async (req, res) => {
+    const userId = req.user.id;
+    try {
+        const result = await db.query(
+            "SELECT id, email, admin, name FROM users WHERE id = $1",
+            [userId]
+        );
+        const user = result.rows[0];
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar usuário" });
+    }
 });
 
 // Logout
@@ -232,10 +244,10 @@ router.post('/logout', (req, res) => {
         sameSite: 'lax',
         path: '/',
     });
-
     res.status(200).json({ message: 'Logout realizado com sucesso.' });
 });
 
+// Esqueci minha senha
 router.post('/forgot-password', async (req, res) => {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email obrigatório' });

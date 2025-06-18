@@ -1,14 +1,12 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import "quill/dist/quill.snow.css";
+import Editor from "@/components/Editor";
 
 export default function CreateBlogPage() {
   const router = useRouter();
-  const editorRef = useRef<HTMLDivElement>(null);
-  const quillInstance = useRef<any>(null);
 
   const [form, setForm] = useState({
     title: "",
@@ -18,11 +16,13 @@ export default function CreateBlogPage() {
     thumbnail: "",
     summary: "",
     content: "",
+    author: "",
   });
 
   const [authChecked, setAuthChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [htmlContent, setHtmlContent] = useState("");
 
   useEffect(() => {
     async function checkAuth() {
@@ -32,32 +32,6 @@ export default function CreateBlogPage() {
     }
     checkAuth();
   }, [router]);
-
-  useEffect(() => {
-    async function loadEditor() {
-      if (editorRef.current && !quillInstance.current) {
-        const Quill = (await import("quill")).default;
-
-        quillInstance.current = new Quill(editorRef.current, {
-          theme: "snow",
-          placeholder: "Comece a escrever...",
-          modules: {
-            toolbar: [
-              [{ font: [] }, { size: [] }],
-              ["bold", "italic", "underline", "strike"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              [{ align: [] }],
-              ["link", "image", "blockquote"],
-              [{ color: [] }, { background: [] }],
-              ["clean"],
-            ],
-          },
-        });
-      }
-    }
-
-    loadEditor();
-  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -71,8 +45,6 @@ export default function CreateBlogPage() {
     setLoading(true);
     setSuccess(false);
 
-    const html = quillInstance.current?.root.innerHTML?.trim() || "";
-
     try {
       const res = await fetch("/api/post", {
         method: "POST",
@@ -81,7 +53,8 @@ export default function CreateBlogPage() {
         body: JSON.stringify({
           ...form,
           reading_time: Number(form.reading_time),
-          content: html,
+          html_content: htmlContent,
+          content: htmlContent,
         }),
       });
 
@@ -95,10 +68,9 @@ export default function CreateBlogPage() {
           thumbnail: "",
           summary: "",
           content: "",
+          author: "",
         });
-        if (quillInstance.current) {
-          quillInstance.current.root.innerHTML = "";
-        }
+        setHtmlContent("");
       } else {
         console.error("Erro ao criar post:", await res.text());
       }
@@ -114,13 +86,15 @@ export default function CreateBlogPage() {
   return (
     <main className="min-h-screen bg-gray-100 px-4 py-12">
       <div className="max-w-5xl mx-auto bg-white shadow rounded-lg p-6">
-        <h1 className="text-2xl font-bold mb-6">Criar Nova Postagem</h1>
+        <h1 className="text-2xl font-bold mb-6 text-black">
+          Criar Nova Postagem
+        </h1>
 
         {success && (
           <p className="text-green-600 mb-4">Post criado com sucesso!</p>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-black">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
               name="title"
@@ -166,6 +140,14 @@ export default function CreateBlogPage() {
               className="border px-3 py-2 rounded w-full"
               required
             />
+            <input
+              name="author"
+              placeholder="Author"
+              value={form.author}
+              onChange={handleChange}
+              className="border px-3 py-2 rounded w-full"
+              required
+            />
           </div>
 
           <textarea
@@ -181,7 +163,7 @@ export default function CreateBlogPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Conteúdo
             </label>
-            <div ref={editorRef} className="bg-white border rounded" />
+            <Editor content={htmlContent} setContent={setHtmlContent} />
           </div>
 
           <div className="flex justify-end gap-4">

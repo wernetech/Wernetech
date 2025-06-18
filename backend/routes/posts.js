@@ -8,14 +8,14 @@ const router = express.Router();
 // Validação com Zod
 const postSchema = z.object({
     title: z.string().min(1),
-    slug: z.string().min(1).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug inválido"),
+    slug: z.string().min(1),
     summary: z.string().min(1),
-    content: z.string().min(1),
-    html_content: z.string().min(1),
     author: z.string().min(1),
     category: z.string().min(1),
-    reading_time: z.number().int().min(1),
     thumbnail: z.string().url(),
+    reading_time: z.number().min(1),
+    html_content: z.string().min(1),
+    content: z.string().optional(),
 });
 
 const commentSchema = z.object({
@@ -113,6 +113,42 @@ router.get('/:slug', async (req, res) => {
         res.status(200).json(result.rows[0]);
     } catch (error) {
         console.error('Erro ao buscar post:', error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+});
+
+router.get('/', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const offset = (page - 1) * limit;
+
+    const { category, author } = req.query;
+    const filters = [];
+    const values = [];
+
+    let baseQuery = `SELECT * FROM posts`;
+    let whereClause = '';
+
+    if (category) {
+        values.push(category);
+        filters.push(`category = $${values.length}`);
+    }
+    if (author) {
+        values.push(author);
+        filters.push(`author = $${values.length}`);
+    }
+
+    if (filters.length > 0) {
+        whereClause = ` WHERE ${filters.join(' AND ')}`;
+    }
+
+    const finalQuery = `${baseQuery}${whereClause} ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    try {
+        const result = await db.query(finalQuery, values);
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Erro ao buscar posts:', error);
         res.status(500).json({ error: 'Erro interno do servidor' });
     }
 });
@@ -266,7 +302,5 @@ router.get('/:slug/comentarios', async (req, res) => {
         res.status(500).json({ error: 'Erro interno' });
     }
 });
-
-
 
 export default router;

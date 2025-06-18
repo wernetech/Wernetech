@@ -34,11 +34,12 @@ export async function createUsersTable() {
     if (existingAdmin.rows.length === 0) {
       const hashedPassword = await bcrypt.hash('admin123#', 10);
       await db.query(
-        `INSERT INTO users (email, password, cellphone, company, city, state, verified, admin)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        `INSERT INTO users (email, password, name, cellphone, company, city, state, verified, admin)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
         [
           'admin@wernetech.com',
           hashedPassword,
+          'administrador',
           '(31) 99999-9999',
           'WerneTech',
           'Contagem',

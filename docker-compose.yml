@@ -31,10 +31,10 @@ services:
       DATABASE_URL: "postgresql://wernetech_admin:admin_9876@postgres:5432/empresa"
       JWT_SECRET: "2fb7b9dc6cf44c0a928b0e9f41f3c9286bb35fef7d1a411c6c88b85b6e007c78"
       PORT: 4000
-      SMTP_HOST: smtp.gmail.com
-      SMTP_PORT: 587
-      SMTP_USER: quaresma.davi@gmail.com
-      SMTP_PASS: aeymdihomjbpvvxv
+      SMTP_HOST: mail.wernetech.com
+      SMTP_PORT: 465
+      SMTP_USER: contato@wernetech.com
+      SMTP_PASS: $?_U*%OjAS~Kx.DG
       EMAIL_IP: 5.161.71.249
 
   frontend:
