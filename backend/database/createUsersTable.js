@@ -7,6 +7,7 @@ export async function createUsersTable() {
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         email VARCHAR(255) NOT NULL UNIQUE,
+        name VARCHAR(255) NOT NULL,
         password TEXT NOT NULL,
         cellphone VARCHAR(15) NOT NULL,
         company VARCHAR(100) NOT NULL,

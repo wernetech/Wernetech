@@ -72,7 +72,12 @@ export default function Header() {
 
     return isAuthenticated ? (
       <>
-        {user?.admin &&
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <span>Bem-vindo,</span>
+          <strong>{user?.name?.split(" ")[0]}</strong>{" "}
+        </div>
+
+        {user?.admin === true &&
           (pathname === "/blog/admin" ? (
             <Link
               href="/"

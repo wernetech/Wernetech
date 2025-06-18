@@ -57,7 +57,7 @@ export default function Contato() {
           </div>
           <div className="mb-6">
             <strong className="block text-gray-800 mb-1">E-mail</strong>
-            <span className="text-gray-600">comercial@wernetech.com</span>
+            <span className="text-gray-600">contato@wernetech.com</span>
           </div>
           <div>
             <strong className="block text-gray-800 mb-1">Endereço</strong>

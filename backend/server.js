@@ -11,6 +11,7 @@ import emailRoutes from './routes/email.js';
 import { createLeadsTable } from './database/createLeadsTable.js';
 import { createUsersTable } from './database/createUsersTable.js';
 import { createPostsTable } from './database/createPostsTable.js';
+import { createCommentsTable } from './database/createComments.js';
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ async function iniciarBancoComRetry() {
       await createUsersTable();
       await createPostsTable();
       await createLeadsTable();
+      await createCommentsTable();
 
       console.log("✅ Tabelas verificadas/criadas com sucesso");
       return; // Finaliza com sucesso
