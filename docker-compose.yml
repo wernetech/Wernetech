@@ -34,7 +34,7 @@ services:
       SMTP_HOST: mail.wernetech.com
       SMTP_PORT: 465
       SMTP_USER: contato@wernetech.com
-      SMTP_PASS: $?_U*%OjAS~Kx.DG
+      SMTP_PASS: '$?_U*%OjAS~Kx.DG'
       EMAIL_IP: 5.161.71.249
 
   frontend:
