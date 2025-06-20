@@ -157,10 +157,8 @@ export default function RegisterForm() {
         return;
       }
 
-      setSuccess(
-        "Verifique seu e-mail para confirmar o cadastro antes de fazer login."
-      );
-      setTimeout(() => router.push("/login"), 5000);
+      setSuccess("ok");
+      setTimeout(() => router.push("/login"), 3000);
     } catch (err) {
       setError("Erro ao conectar com o servidor");
     } finally {
@@ -401,8 +399,40 @@ export default function RegisterForm() {
               <p className="text-sm text-red-600 text-center">{error}</p>
             )}
             {success && (
-              <div className="text-sm text-green-700 bg-green-100 border border-green-300 rounded-md p-2 text-center">
-                {success}
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm px-4">
+                <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-6 text-center animate-fadeIn">
+                  <div className="flex justify-center mb-4">
+                    <svg
+                      className="w-14 h-14 text-green-500"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 12l2 2 4-4M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"
+                      />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                    Conta criada com sucesso!
+                  </h2>
+                  <p className="text-sm text-gray-600 mb-6">
+                    Verifique seu e-mail para confirmar o cadastro antes de
+                    fazer login.
+                  </p>
+                  <button
+                    onClick={() => router.push("/login")}
+                    className="bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                  >
+                    Ir para o login agora
+                  </button>
+                  <p className="text-xs text-gray-400 mt-4">
+                    Você será redirecionado automaticamente.
+                  </p>
+                </div>
               </div>
             )}
 

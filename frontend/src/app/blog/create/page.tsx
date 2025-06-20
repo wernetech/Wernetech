@@ -3,7 +3,6 @@ export const dynamic = "force-dynamic";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Editor from "@/components/Editor";
 
 export default function CreateBlogPage() {
   const router = useRouter();
@@ -15,7 +14,6 @@ export default function CreateBlogPage() {
     reading_time: "",
     thumbnail: "",
     summary: "",
-    content: "",
     author: "",
   });
 
@@ -52,9 +50,7 @@ export default function CreateBlogPage() {
         credentials: "include",
         body: JSON.stringify({
           ...form,
-          reading_time: Number(form.reading_time),
-          html_content: htmlContent,
-          content: htmlContent,
+          reading_time: Number(form.reading_time)
         }),
       });
 
@@ -67,7 +63,6 @@ export default function CreateBlogPage() {
           reading_time: "",
           thumbnail: "",
           summary: "",
-          content: "",
           author: "",
         });
         setHtmlContent("");
@@ -158,13 +153,6 @@ export default function CreateBlogPage() {
             className="w-full border rounded px-4 py-2 h-20"
             required
           />
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Conteúdo
-            </label>
-            <Editor content={htmlContent} setContent={setHtmlContent} />
-          </div>
 
           <div className="flex justify-end gap-4">
             <button

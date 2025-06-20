@@ -8,13 +8,12 @@ export async function createPostsTable() {
             title TEXT NOT NULL,
             slug TEXT UNIQUE NOT NULL,
             summary TEXT,
-            content TEXT NOT NULL,
-            html_content TEXT,              
             author TEXT NOT NULL,
             category TEXT,
             reading_time INT,
             thumbnail TEXT,
             likes INT DEFAULT 0,            
+            comments INT DEFAULT 0,  -- Adicionando a coluna comments
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
