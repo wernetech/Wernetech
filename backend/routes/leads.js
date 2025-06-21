@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
     `;
 
     await sendEmail({
-      to: 'contato@wernetech.com',
+      to: 'comercial@wernetech.com',
       subject: 'Novo lead via consultoria - Wernetech',
       html: htmlContent,
     });
