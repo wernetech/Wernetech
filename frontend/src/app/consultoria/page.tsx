@@ -193,7 +193,7 @@ export default function ConsultoriaPage() {
                   onChange={handleChange}
                   required
                   className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="(99) 99999-9999"
+                  placeholder="Zoom WorkPlace"
                 />
               </div>
               <div>

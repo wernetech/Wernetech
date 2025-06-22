@@ -10,7 +10,7 @@ const leadSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   phone: z.string().min(8),
-  solution: z.string().min(8),
+  solution: z.string().min(1),
   company: z.string().optional(),
   position: z.string().optional(),
   segment: z.string().optional(),
