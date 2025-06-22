@@ -10,6 +10,7 @@ const leadSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   phone: z.string().min(8),
+  solution: z.string().min(8),
   company: z.string().optional(),
   position: z.string().optional(),
   segment: z.string().optional(),
@@ -24,13 +25,13 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: result.error.format() });
   }
 
-  const { name, email, phone, company, position, segment, message } = result.data;
+  const { name, email, phone, solution, company, position, segment, message } = result.data;
 
   try {
     await db.query(
-      `INSERT INTO leads (name, email, phone, company, position, segment, message)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [name, email, phone, company, position, segment, message]
+      `INSERT INTO leads (name, email, phone, solution, company, position, segment, message)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [name, email, phone, solution, company, position, segment, message]
     );
 
     // Envio de e-mail
@@ -47,6 +48,7 @@ router.post('/', async (req, res) => {
             <p><strong>Telefone:</strong> ${phone}</p>
             <p><strong>Empresa:</strong> ${company || '-'}</p>
             <p><strong>Cargo:</strong> ${position || '-'}</p>
+            <p><strong>Solução:</strong> ${solution || '-'}</p>
             <p><strong>Segmento:</strong> ${segment || '-'}</p>
             <p><strong>Mensagem:</strong><br/>${message}</p>
           </div>

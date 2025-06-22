@@ -6,6 +6,7 @@ export default function ConsultoriaPage() {
     name: "",
     email: "",
     phone: "",
+    solution: "",
     company: "",
     position: "",
     segment: "",
@@ -48,6 +49,7 @@ export default function ConsultoriaPage() {
           name: "",
           email: "",
           phone: "",
+          solution: "",
           company: "",
           position: "",
           segment: "",
@@ -175,6 +177,19 @@ export default function ConsultoriaPage() {
                 <input
                   name="phone"
                   value={form.phone}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="(99) 99999-9999"
+                />
+              </div>
+              <div>
+                <label className="text-sm text-gray-700 font-medium">
+                  Solução/Tecnologia *
+                </label>
+                <input
+                  name="solution"
+                  value={form.solution}
                   onChange={handleChange}
                   required
                   className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"

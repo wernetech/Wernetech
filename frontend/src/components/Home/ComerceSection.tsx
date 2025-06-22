@@ -35,7 +35,7 @@ export default function CommerceSection() {
           </p>
 
           <Link
-            href="/temporario"
+            href="/oferta"
             className="mt-6 inline-block bg-blue-700 text-white px-6 py-3 rounded-md shadow hover:bg-blue-800 transition"
           >
             Tenho interesse

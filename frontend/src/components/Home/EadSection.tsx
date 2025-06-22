@@ -64,7 +64,7 @@ export default function EadSection() {
         {/* Botão */}
         <div className="text-center mt-14">
           <Link
-            href="/temporario"
+            href="/oferta"
             className="inline-block bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg text-sm font-medium shadow-md transition"
           >
             Quero ser o primeiro a saber

@@ -8,6 +8,7 @@ export async function createLeadsTable() {
         name TEXT NOT NULL,
         email TEXT NOT NULL,
         phone TEXT NOT NULL,
+        solution TEXT,
         company TEXT,
         position TEXT,
         segment TEXT,
