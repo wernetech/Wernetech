@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 
 export default function ConsultoriaPage() {
@@ -183,19 +184,37 @@ export default function ConsultoriaPage() {
                   placeholder="(99) 99999-9999"
                 />
               </div>
+
               <div>
                 <label className="text-sm text-gray-700 font-medium">
-                  Solução/Tecnologia *
+                  Solução ou Tecnologia *
                 </label>
-                <input
+                <select
                   name="solution"
                   value={form.solution}
                   onChange={handleChange}
                   required
                   className="mt-1 w-full border border-gray-300 rounded-md px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Zoom WorkPlace"
-                />
+                >
+                  <option value="" disabled>
+                    Informe a solução ou tecnologia
+                  </option>
+                  <option value="Zoom">Zoom</option>
+                  <option value="Google Workspace">Google Workspace</option>
+                  <option value="TeamViewer">TeamViewer</option>
+                  <option value="AnyDesk">AnyDesk</option>
+                  <option value="Infraestrutura HPE">Infraestrutura HPE</option>
+                  <option value="Controladoras Indilinx">
+                    Controladoras Indilinx
+                  </option>
+                  <option value="Kaspersky">Kaspersky</option>
+                  <option value="ChromeOS">ChromeOS</option>
+                  <option value="Google Cloud">Google Cloud</option>
+                  <option value="SolarWinds">SolarWinds</option>
+                  <option value="Outros">Outros</option>
+                </select>
               </div>
+
               <div>
                 <label className="text-sm text-gray-700 font-medium">
                   Cargo

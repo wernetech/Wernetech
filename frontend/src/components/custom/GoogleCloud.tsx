@@ -10,6 +10,7 @@ export default function GoogleCloudPage() {
     email: "",
     phone: "",
     company: "",
+    solution: "",
     role: "",
     licenses: "",
   });
@@ -43,6 +44,7 @@ export default function GoogleCloudPage() {
           company: "",
           role: "",
           licenses: "",
+          solution: "",
         });
       } else {
         alert("Erro ao enviar o contato.");
@@ -77,7 +79,9 @@ export default function GoogleCloudPage() {
                 Construa o futuro na nuvem com o Google Cloud
               </h1>
               <p className="text-lg text-gray-700 mb-8">
-                A plataforma de nuvem segura, escalável e inteligente que potencia a inovação, análise de dados e modernização de infraestrutura.
+                A plataforma de nuvem segura, escalável e inteligente que
+                potencia a inovação, análise de dados e modernização de
+                infraestrutura.
               </p>
               <a
                 href="#contato"
@@ -127,18 +131,22 @@ export default function GoogleCloudPage() {
                 transition={{ delay: i * 0.2, duration: 0.5 }}
               >
                 <h3 className="text-xl font-bold mb-2">
-                  {[
-                    "Infraestrutura Escalável e Segura",
-                    "Poder da Análise de Dados",
-                    "Inovação com IA e ML",
-                  ][i]}
+                  {
+                    [
+                      "Infraestrutura Escalável e Segura",
+                      "Poder da Análise de Dados",
+                      "Inovação com IA e ML",
+                    ][i]
+                  }
                 </h3>
                 <p>
-                  {[
-                    "Hospede suas aplicações em data centers modernos com alta performance e segurança.",
-                    "Transforme dados em insights acionáveis com BigQuery e outras ferramentas.",
-                    "Implemente soluções inteligentes com os serviços de IA e machine learning do Google.",
-                  ][i]}
+                  {
+                    [
+                      "Hospede suas aplicações em data centers modernos com alta performance e segurança.",
+                      "Transforme dados em insights acionáveis com BigQuery e outras ferramentas.",
+                      "Implemente soluções inteligentes com os serviços de IA e machine learning do Google.",
+                    ][i]
+                  }
                 </p>
               </motion.div>
             ))}
@@ -159,30 +167,35 @@ export default function GoogleCloudPage() {
               Recursos essenciais para escalar seu negócio
             </h2>
             <p className="text-lg text-gray-300 mb-12">
-              O Google Cloud combina performance, inteligência e economia para atender empresas de todos os portes.
+              O Google Cloud combina performance, inteligência e economia para
+              atender empresas de todos os portes.
             </p>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-8">
-            {["Compute Engine", "Cloud Storage", "BigQuery", "Vertex AI"].map((title, i) => (
-              <motion.div
-                key={title}
-                className="bg-gray-800 p-6 rounded-lg"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2, duration: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <h4 className="font-bold text-lg">{title}</h4>
-                <p className="text-gray-400">
-                  {[
-                    "Execução de VMs altamente configuráveis sob demanda.",
-                    "Armazene e acesse seus dados de forma segura e escalável.",
-                    "Análise de grandes volumes de dados em segundos.",
-                    "Construa e implemente modelos de IA com facilidade.",
-                  ][i]}
-                </p>
-              </motion.div>
-            ))}
+            {["Compute Engine", "Cloud Storage", "BigQuery", "Vertex AI"].map(
+              (title, i) => (
+                <motion.div
+                  key={title}
+                  className="bg-gray-800 p-6 rounded-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.2, duration: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <h4 className="font-bold text-lg">{title}</h4>
+                  <p className="text-gray-400">
+                    {
+                      [
+                        "Execução de VMs altamente configuráveis sob demanda.",
+                        "Armazene e acesse seus dados de forma segura e escalável.",
+                        "Análise de grandes volumes de dados em segundos.",
+                        "Construa e implemente modelos de IA com facilidade.",
+                      ][i]
+                    }
+                  </p>
+                </motion.div>
+              )
+            )}
           </div>
         </div>
       </section>
@@ -204,7 +217,8 @@ export default function GoogleCloudPage() {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Fale com nossos especialistas e descubra como transformar sua infraestrutura em uma vantagem competitiva.
+            Fale com nossos especialistas e descubra como transformar sua
+            infraestrutura em uma vantagem competitiva.
           </motion.p>
           <motion.form
             onSubmit={handleSubmit}
@@ -216,18 +230,84 @@ export default function GoogleCloudPage() {
             <h3 className="text-lg font-semibold mb-2 text-blue-600">
               Preencha o formulário abaixo:
             </h3>
-            <input name="name" value={form.name} onChange={handleChange} placeholder="Digite seu nome" required className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Digite seu e-mail" required className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input name="phone" value={form.phone} onChange={handleChange} placeholder="Digite seu WhatsApp" required className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input name="company" value={form.company} onChange={handleChange} placeholder="Empresa / Instituição" className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <select name="role" value={form.role} onChange={handleChange} required className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Digite seu nome"
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Digite seu e-mail"
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Digite seu WhatsApp"
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              name="company"
+              value={form.company}
+              onChange={handleChange}
+              placeholder="Empresa / Instituição"
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <select
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option value="">Seu cargo*</option>
               <option>Diretor</option>
               <option>TI</option>
               <option>Compras</option>
               <option>Outros</option>
             </select>
-            <select name="licenses" value={form.licenses} onChange={handleChange} required className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            <select
+              name="solution"
+              value={form.solution}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled selected>
+                Informe a solução ou tecnologia
+              </option>
+              <option value="Zoom">Zoom</option>
+              <option value="Google Workspace">Google Workspace</option>
+              <option value="TeamViewer">TeamViewer</option>
+              <option value="AnyDesk">AnyDesk</option>
+              <option value="Infraestrutura HPE">Infraestrutura HPE</option>
+              <option value="Controladoras Indilinx">
+                Controladoras Indilinx
+              </option>
+              <option value="Kaspersky">Kaspersky</option>
+              <option value="ChromeOS">ChromeOS</option>
+              <option value="Google Cloud">Google Cloud</option>
+              <option value="SolarWinds">SolarWinds</option>
+              <option value="Outros">Outros</option>
+            </select>
+            
+            <select
+              name="licenses"
+              value={form.licenses}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <option value="">Quantas licenças você precisa?*</option>
               <option>1-10</option>
               <option>11-50</option>
@@ -244,7 +324,9 @@ export default function GoogleCloudPage() {
               disabled={loading}
               className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition"
             >
-              {loading ? "Enviando..." : "ENTRE EM CONTATO COM O SETOR DE VENDAS"}
+              {loading
+                ? "Enviando..."
+                : "ENTRE EM CONTATO COM O SETOR DE VENDAS"}
             </button>
           </motion.form>
         </div>

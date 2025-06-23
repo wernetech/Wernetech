@@ -9,6 +9,7 @@ router.post("/send", async (req, res) => {
         name,
         email,
         phone,
+        solution,
         company,
         position,
         segment,
@@ -119,6 +120,7 @@ router.post("/send", async (req, res) => {
                                 <tr><td><strong>Nome:</strong> ${name}</td></tr>
                                 <tr><td><strong>E-mail:</strong> ${email}</td></tr>
                                 <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
+                                <tr><td><strong>Solução:</strong> ${solution || "-"}</td></tr>
                                 <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
                                 <tr><td><strong>Cargo:</strong> ${position || "-"}</td></tr>
                                 <tr><td><strong>Segmento:</strong> ${segment || "-"}</td></tr>
@@ -254,9 +256,142 @@ router.post("/send2", async (req, res) => {
                             <tr><td><strong>Nome:</strong> ${name}</td></tr>
                             <tr><td><strong>E-mail:</strong> ${email}</td></tr>
                             <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
+                            <tr><td><strong>Solução:</strong> ${solution || "-"}</td></tr>
                             <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
                             <tr><td><strong>Cargo:</strong> ${role || "-"}</td></tr>
                             <tr><td><strong>Qtd. de Licenças:</strong> ${licenses || "-"}</td></tr>
+                        </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer">
+                        © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
+                        </td>
+                    </tr>
+                    </table>
+                </div>
+                </body>
+                </html>
+                `
+        });
+
+        res.status(200).json({ success: true, message: "Email enviado com sucesso!" });
+    } catch (err) {
+        console.error("Erro ao enviar email:", err);
+        res.status(500).json({ error: "Falha ao enviar o e-mail." });
+    }
+});
+
+router.post("/send3", async (req, res) => {
+    const { name, email, phone, company, role, solution } = req.body;
+
+    if (!name || !email) {
+        return res.status(400).json({ error: "Campos obrigatórios ausentes." });
+    }
+
+    try {
+        await sendEmail({
+            to: process.env.SMTP_USER,
+            subject: "Novo contato via página inicial",
+            html: `
+             <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                <title>Novo Lead Recebido</title>
+                <style>
+                    body {
+                    margin: 0;
+                    padding: 0;
+                    -webkit-text-size-adjust: 100%;
+                    -ms-text-size-adjust: 100%;
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f7f6;
+                    }
+                    table { border-spacing: 0; }
+                    td { padding: 0; }
+                    img { border: 0; }
+                    .wrapper {
+                    width: 100%;
+                    table-layout: fixed;
+                    background-color: #f4f7f6;
+                    padding: 40px 0;
+                    }
+                    .main {
+                    background-color: #ffffff;
+                    margin: 0 auto;
+                    width: 100%;
+                    max-width: 600px;
+                    border-spacing: 0;
+                    font-family: Arial, sans-serif;
+                    color: #333333;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                    overflow: hidden;
+                    }
+                    .header {
+                    background-color: #3B82F6;
+                    color: #ffffff;
+                    padding: 30px;
+                    text-align: center;
+                    }
+                    .header h1 {
+                    margin: 0;
+                    font-size: 28px;
+                    font-weight: bold;
+                    }
+                    .content {
+                    padding: 30px 40px;
+                    }
+                    .content h2 {
+                    font-size: 22px;
+                    margin-top: 0;
+                    margin-bottom: 20px;
+                    color: #3B82F6;
+                    }
+                    .lead-info {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                    }
+                    .lead-info td {
+                    padding: 12px 0;
+                    border-bottom: 1px solid #eeeeee;
+                    }
+                    .lead-info strong {
+                    color: #555555;
+                    width: 120px;
+                    display: inline-block;
+                    }
+                    .footer {
+                    background-color: #E5E7EB;
+                    color: #777777;
+                    padding: 20px;
+                    text-align: center;
+                    font-size: 12px;
+                    }
+                </style>
+                </head>
+                <body>
+                <div class="wrapper">
+                    <table class="main">
+                    <tr class="header">
+                        <td style="text-align: center;">
+                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Wernetech Logo" style="max-width: 200px; height: auto;" />
+                            </td>
+                    </tr>
+                    <tr>
+                        <td class="content">
+                        <h2>📨 Cliente interessado em recursos não lançados</h2>
+                        <table class="lead-info">
+                            <tr><td><strong>Nome:</strong> ${name}</td></tr>
+                            <tr><td><strong>E-mail:</strong> ${email}</td></tr>
+                            <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
+                            <tr><td><strong>Solução:</strong> ${solution || "-"}</td></tr>
+                            <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
+                            <tr><td><strong>Cargo:</strong> ${role || "-"}</td></tr>
                         </table>
                         </td>
                     </tr>
@@ -386,141 +521,11 @@ router.post("/send4", async (req, res) => {
                             <tr><td><strong>Nome:</strong> ${name}</td></tr>
                             <tr><td><strong>E-mail:</strong> ${email}</td></tr>
                             <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
+                            <tr><td><strong>Solução:</strong> ${solution || "-"}</td></tr>
                             <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
                             <tr><td><strong>Cargo:</strong> ${role || "-"}</td></tr>
                             <tr><td><strong>Observação:</strong> ${observation || "-"}</td></tr>
                             <p><strong>Nome:</strong> ${name}</p>
-                        </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="footer">
-                        © ${new Date().getFullYear()} Wernetech - Todos os direitos reservados.
-                        </td>
-                    </tr>
-                    </table>
-                </div>
-                </body>
-                </html>
-                `
-        });
-
-        res.status(200).json({ success: true, message: "Email enviado com sucesso!" });
-    } catch (err) {
-        console.error("Erro ao enviar email:", err);
-        res.status(500).json({ error: "Falha ao enviar o e-mail." });
-    }
-});
-
-router.post("/send3", async (req, res) => {
-    const { name, email, phone, company, role } = req.body;
-
-    if (!name || !email) {
-        return res.status(400).json({ error: "Campos obrigatórios ausentes." });
-    }
-
-    try {
-        await sendEmail({
-            to: process.env.SMTP_USER,
-            subject: "Novo contato via página inicial",
-            html: `
-             <!DOCTYPE html>
-                <html lang="pt-BR">
-                <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta http-equiv="X-UA-Compatible" content="ie=edge">
-                <title>Novo Lead Recebido</title>
-                <style>
-                    body {
-                    margin: 0;
-                    padding: 0;
-                    -webkit-text-size-adjust: 100%;
-                    -ms-text-size-adjust: 100%;
-                    font-family: Arial, sans-serif;
-                    background-color: #f4f7f6;
-                    }
-                    table { border-spacing: 0; }
-                    td { padding: 0; }
-                    img { border: 0; }
-                    .wrapper {
-                    width: 100%;
-                    table-layout: fixed;
-                    background-color: #f4f7f6;
-                    padding: 40px 0;
-                    }
-                    .main {
-                    background-color: #ffffff;
-                    margin: 0 auto;
-                    width: 100%;
-                    max-width: 600px;
-                    border-spacing: 0;
-                    font-family: Arial, sans-serif;
-                    color: #333333;
-                    border-radius: 12px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-                    overflow: hidden;
-                    }
-                    .header {
-                    background-color: #3B82F6;
-                    color: #ffffff;
-                    padding: 30px;
-                    text-align: center;
-                    }
-                    .header h1 {
-                    margin: 0;
-                    font-size: 28px;
-                    font-weight: bold;
-                    }
-                    .content {
-                    padding: 30px 40px;
-                    }
-                    .content h2 {
-                    font-size: 22px;
-                    margin-top: 0;
-                    margin-bottom: 20px;
-                    color: #3B82F6;
-                    }
-                    .lead-info {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                    }
-                    .lead-info td {
-                    padding: 12px 0;
-                    border-bottom: 1px solid #eeeeee;
-                    }
-                    .lead-info strong {
-                    color: #555555;
-                    width: 120px;
-                    display: inline-block;
-                    }
-                    .footer {
-                    background-color: #E5E7EB;
-                    color: #777777;
-                    padding: 20px;
-                    text-align: center;
-                    font-size: 12px;
-                    }
-                </style>
-                </head>
-                <body>
-                <div class="wrapper">
-                    <table class="main">
-                    <tr class="header">
-                        <td style="text-align: center;">
-                            <img src="https://drive.google.com/uc?id=1lGGphQkjKi__3OotayUd55C_21IzlQhl" alt="Wernetech Logo" style="max-width: 200px; height: auto;" />
-                            </td>
-                    </tr>
-                    <tr>
-                        <td class="content">
-                        <h2>📨 Cliente interessado em recursos não lançados</h2>
-                        <table class="lead-info">
-                            <tr><td><strong>Nome:</strong> ${name}</td></tr>
-                            <tr><td><strong>E-mail:</strong> ${email}</td></tr>
-                            <tr><td><strong>Telefone:</strong> ${phone || "-"}</td></tr>
-                            <tr><td><strong>Empresa:</strong> ${company || "-"}</td></tr>
-                            <tr><td><strong>Cargo:</strong> ${role || "-"}</td></tr>
                         </table>
                         </td>
                     </tr>
@@ -664,8 +669,5 @@ router.post("/send5", async (req, res) => {
         res.status(500).json({ error: "Falha ao enviar o e-mail." });
     }
 });
-
-
-
 
 export default router;

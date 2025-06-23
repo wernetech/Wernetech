@@ -11,6 +11,7 @@ export default function GoogleWorkspace() {
     email: "",
     phone: "",
     company: "",
+    solution: "",
     role: "",
     licenses: "",
   });
@@ -43,6 +44,7 @@ export default function GoogleWorkspace() {
           company: "",
           role: "",
           licenses: "",
+          solution: "",
         });
       } else {
         alert("Erro ao enviar contato.");
@@ -287,6 +289,7 @@ export default function GoogleWorkspace() {
               placeholder="Empresa / Instituição"
               className="w-full border border-gray-300 rounded-md px-4 py-2"
             />
+
             <select
               name="role"
               value={form.role}
@@ -300,6 +303,32 @@ export default function GoogleWorkspace() {
               <option>Compras</option>
               <option>Outros</option>
             </select>
+
+            <select
+              name="solution"
+              value={form.solution}
+              onChange={handleChange}
+              required
+              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="" disabled selected>
+                Informe a solução ou tecnologia
+              </option>
+              <option value="Zoom">Zoom</option>
+              <option value="Google Workspace">Google Workspace</option>
+              <option value="TeamViewer">TeamViewer</option>
+              <option value="AnyDesk">AnyDesk</option>
+              <option value="Infraestrutura HPE">Infraestrutura HPE</option>
+              <option value="Controladoras Indilinx">
+                Controladoras Indilinx
+              </option>
+              <option value="Kaspersky">Kaspersky</option>
+              <option value="ChromeOS">ChromeOS</option>
+              <option value="Google Cloud">Google Cloud</option>
+              <option value="SolarWinds">SolarWinds</option>
+              <option value="Outros">Outros</option>
+            </select>
+
             <select
               name="licenses"
               value={form.licenses}
@@ -313,6 +342,7 @@ export default function GoogleWorkspace() {
               <option>51-100</option>
               <option>+100</option>
             </select>
+            
             {success && (
               <p className="text-green-600 text-sm text-center">
                 Contato enviado com sucesso!
