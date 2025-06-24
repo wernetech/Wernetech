@@ -3,12 +3,13 @@
 ## 🔐 Dados de Acesso ao Sistema (Servidor Ubuntu)
 
 - **Usuário Root:** root
-- **Senha:** (definida no provisionamento, recomendável alterar no primeiro acesso)
+- **IP de conexão:** 5.161.71.249
+- **Senha:** (Gerada pela VPS)
 
 ### Como mudar a senha do root:
 
 ```bash
-passwd
+Você deve gerar sempre na vps para seguranaça, na aba RESCUE, clique em Reset Root Password, ai pegue e copie quando pedir no terminal
 ```
 
 ## 🚀 Deploy e Infraestrutura
@@ -190,4 +191,6 @@ volumes:
 ---
 
 > Documentação elaborada com base na implantação e requisitos de infraestrutura do cliente. Pronta para uso e manutenção.
+
+> Desenvolvido por: Davi Quaresma da Silva Henriques
 
