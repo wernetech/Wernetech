@@ -181,6 +181,120 @@ volumes:
 
 ---
 
+# CRUD da Tabela "users" (Banco de Dados PostgreSQL)
+
+Este guia foi criado para demonstrar como manipular os dados da tabela `users` no banco de dados PostgreSQL, utilizado no projeto Wernetech. Abaixo temos exemplos práticos de como realizar as principais operações: SELECT, INSERT, UPDATE e DELETE.
+
+---
+
+## 📒 Estrutura da Tabela `users`
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  name VARCHAR(255) NOT NULL,
+  password TEXT NOT NULL,
+  cellphone VARCHAR(15) NOT NULL,
+  company VARCHAR(100) NOT NULL,
+  city VARCHAR(100) NOT NULL,
+  state VARCHAR(2) NOT NULL,
+  verified BOOLEAN DEFAULT false,
+  verification_token TEXT,
+  reset_token TEXT,
+  admin BOOLEAN DEFAULT false,
+  reset_token_expires TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 🔍 SELECT (Consultar)
+
+```sql
+-- Buscar todos os usuários
+SELECT * FROM users;
+
+-- Buscar um usuário por ID
+SELECT * FROM users WHERE id = 1;
+
+-- Buscar usuários administradores
+SELECT * FROM users WHERE admin = true;
+```
+
+---
+
+## ➕ INSERT (Inserir)
+
+```sql
+-- Inserir um novo usuário comum
+INSERT INTO users (email, name, password, cellphone, company, city, state)
+VALUES (
+  'usuario@teste.com',
+  'Usuário Teste',
+  'senha_hashed_aqui',
+  '(31) 91234-5678',
+  'Empresa XYZ',
+  'Belo Horizonte',
+  'MG'
+);
+
+-- Inserir um usuário administrador já verificado
+INSERT INTO users (email, name, password, cellphone, company, city, state, verified, admin)
+VALUES (
+  'admin@teste.com',
+  'Admin Teste',
+  'senha_hashed_aqui',
+  '(31) 90000-0000',
+  'Empresa XYZ',
+  'Contagem',
+  'MG',
+  true,
+  true
+);
+```
+
+---
+
+## ✏️ UPDATE (Atualizar)
+
+```sql
+-- Atualizar o nome e cidade de um usuário
+UPDATE users
+SET name = 'Novo Nome', city = 'Nova Cidade', updated_at = CURRENT_TIMESTAMP
+WHERE id = 1;
+
+-- Atualizar senha (hash já gerado pelo backend)
+UPDATE users
+SET password = 'nova_senha_hashed', updated_at = CURRENT_TIMESTAMP
+WHERE email = 'usuario@teste.com';
+```
+
+---
+
+## ❌ DELETE (Deletar)
+
+```sql
+-- Remover um usuário por ID
+DELETE FROM users WHERE id = 5;
+
+-- Remover todos os usuários não verificados
+DELETE FROM users WHERE verified = false;
+```
+
+---
+
+## 🚀 Observações Importantes
+
+* **Senhas** devem sempre ser armazenadas com hash. Use o `bcrypt` no backend.
+* Use sempre `updated_at = CURRENT_TIMESTAMP` para registrar alterações.
+* Evite deletar usuários importantes como administradores diretamente.
+* Recomenda-se realizar backups antes de operações destrutivas (DELETE).
+
+---
+
 > Para mais dúvidas ou ajustes, entre em contato com o desenvolvedor responsável ou utilize o repositório no GitHub.
 
 ## 🔧 GitHub
