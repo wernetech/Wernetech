@@ -2,7 +2,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // experimental: {
-  //   allowedDevOrigins: ["http://5.161.71.249:3000"],
+  //   allowedDevOrigins: ["https://wernetech.com:3000"],
   // },
   eslint: {
     ignoreDuringBuilds: true,

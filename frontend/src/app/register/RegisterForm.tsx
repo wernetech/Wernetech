@@ -158,7 +158,7 @@ export default function RegisterForm() {
       }
 
       setSuccess("ok");
-      setTimeout(() => router.push("/login"), 3000);
+      setTimeout(() => router.push("/login"), 1000 * 10);
     } catch (err) {
       setError("Erro ao conectar com o servidor");
     } finally {

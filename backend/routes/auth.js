@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
             [email, hash, name, cellphone, company, city, state, token, expiresAt]
         );
 
-        const confirmLink = `http://localhost/confirm-email?token=${token}`;
+        const confirmLink = `https://wernetech.com/confirm-email?token=${token}`;
 
         await sendEmail({
             to: email,
@@ -268,7 +268,7 @@ router.post('/forgot-password', async (req, res) => {
             [token, new Date(expires), email]
         );
 
-        const resetLink = `http://localhost/reset-password?token=${token}`;
+        const resetLink = `https://wernetech.com/reset-password?token=${token}`;
 
         await sendEmail({
             to: email,
